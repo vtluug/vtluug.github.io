@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>The Linux and Unix Users Group at Virginia Tech</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' type='text/css' href='global.css' />
+	<link rel="shortcut icon" href='favicon.png' />
+	
+</head>
+<body>
+
+<div id="stickwrapper">
+    <div id='wrapper'>
+	<div id='header'>
+		<h1><a href="/">The Linux and Unix Users Group at Virginia Tech</a></h1>
+	</div>
+
+	<ul id='navbar'>
+		<li><a href='#' class='active'>Home</a></li>
+		<li><a href="/about.html">About</a></li>
+		<li><a href="/services.html">Services</a></li>
+		<li><a href="/calendar.html">Calendar</a></li>
+		<li><a href="/irc.html">IRC</a></li>
+		<li><a href="/lists.html">Mailing Lists</a></li>
+		<li class="right"><a href="https://www.facebook.com/vtluug"><img alt="Facebook" src="/facebook.png">Facebook</a></li>
+		<li class="right"><a href="https://twitter.com/vtluug"><img alt="Twitter" src="/twitter.png">Twitter</a></li>		
+		<!--<li class="right"><a href="http://map.vtluug.org/">Map</a></li>-->
+		<!-- <li class="right"><a href="http://gitweb.vtluug.org/">Git</a></li> -->
+		<!-- <li class="right"><a href="https://wiki.vtluug.org/">Wiki</a></li> -->
+		<li class="right"><a href="https://hokieprivacy.org/">Hokie Privacy</a></li>
+		<li class="right"><a href="https://linx.vtluug.org/">linx</a></li>
+	</ul>
+
+	<div id='content'>
+		<h2>Services</h2>
+
+		
+<p>VTLUUG runs a number of services to support the Virginia Tech community. Since we don't charge dues,
+our hardware is funded entirely through any student organization funding we can get, so we are significantly
+limited in the services we can provide.  However, we accept server and hard drive donations through
+departmental transfers; the process for doing so is documented <a href='https://vtluug.org/wiki/Wishlist' rel='external'>on our wiki</a>.</p>
+
+<h3>Current services</h3>
+Services we currently provide include:
+<ul>
+	<li>Installfests each semester</li>
+	<li>Debian <a href='https://vtluug.org/wiki/Infrastructure:Acidburn'>shell 
+	accounts</a></li>
+	<li>Email services</li>
+	<li>Functional LDAP for vtluug services</li>
+</ul>
+
+<h3>Planned services</h3>
+Services we plan to expand or begin to provide in the near future include:
+<ul>
+	<li>An expanded <a href='http://tahoe-lafs.org/'
+	    rel='external'>Tahoe-LAFS</a> grid</li>
+	<li>Web hosting</li>
+	<li>An IRC server</li>
+	<li>A mirror with more distributions</li>
+	<li>Diaspora* Pod</li>
+</ul>
+
+<h3>Unmaintained services</h3>
+<p>We currently have a number of unmaintained services that are broken and in need of adoption.
+If you're interested in volunteering as a maintainer for one, please contact <a href='mailto:officers@vtluug.org'>officers@vtluug.org</a> or reach out to us via IRC.</p>
+
+<p>Current broken or out-of-date services include:</p>
+<ul>
+	<li><a href='http://vtbash.org/' rel='external'>VT Bash</a>, a Virginia Tech 
+        QDB</li>
+	<li>A detailed <a href='http://map.vtluug.org/' rel='external'>map</a> of 
+        campus, Blacksburg, and the surrounding area</li>
+	<li><a href='http://mirror.ece.vt.edu/' rel='external'>Mirroring</a> Linux and 
+        Unix distributions</li>
+	<li>Git <a href='http://gitweb.vtluug.org/' rel='external'>hosting</a></li>
+	<li>A wiki for Virginia Tech, <a href='https://gobblerpedia.org/'
+	    rel='external'>Gobblerpedia</a></li>
+	<li>A <a href='https://torproject.org/' rel='external'>Tor</a> intermediate
+	    relay</a>
+	<li>Full IPv6 support</li>
+	<li>A finger server for Kerberos accounts (on acidburn)</li>
+	<li>A wiki for technical information about Virginia Tech and our own work</li>
+</ul>
+
+
+	</div>
+
+	<div id='footer'>
+		Copyright &copy; 2016 The Linux and Unix Users Group at Virginia Tech. <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license external'>Some rights reserved.</a>
+	</div>
+    </div>
+</div>
+
+<div id="gatekeeper"></div>
+</body>
+</html>
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 8:09:15 May 18, 2016 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 1:15:20 Jan 4, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->

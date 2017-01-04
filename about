@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>About - The Linux and Unix Users Group at Virginia Tech</title>
+	<meta charset='utf-8' />
+	<link rel='stylesheet' type='text/css' href='/global.css' />
+	<link rel="shortcut icon" href='/favicon.png' />
+	
+</head>
+<body>
+
+
+<div id="stickwrapper">
+    <div id='wrapper'>
+	<div id='header'>
+		<h1><a href="">The Linux and Unix Users Group at Virginia Tech</a></h1>
+	</div>
+
+	<ul id='navbar'>
+		<li><a href='#' class='active'>Home</a></li>
+		<li><a href="/about.html">About</a></li>
+		<li><a href="/services.html">Services</a></li>
+		<li><a href="/calendar.html">Calendar</a></li>
+		<li><a href="/irc.html">IRC</a></li>
+		<li><a href="/lists.html">Mailing Lists</a></li>
+		<li class="right"><a href="https://www.facebook.com/vtluug"><img alt="Facebook" src="/facebook.png">Facebook</a></li>
+		<li class="right"><a href="https://twitter.com/vtluug"><img alt="Twitter" src="/twitter.png">Twitter</a></li>		
+		<!--<li class="right"><a href="http://map.vtluug.org/">Map</a></li>-->
+		<!-- <li class="right"><a href="http://gitweb.vtluug.org/">Git</a></li> -->
+		<!-- <li class="right"><a href="https://wiki.vtluug.org/">Wiki</a></li> -->
+		<li class="right"><a href="https://hokieprivacy.org/">Hokie Privacy</a></li>
+		<li class="right"><a href="https://linx.vtluug.org/">linx</a></li>
+	</ul>
+	
+	<div id='content'>
+		<h2>About</h2>
+
+		
+
+<h3>Mission</h3>
+<p>The <strong>Linux and Unix Users Group at Virginia Tech</strong> (VTLUUG or
+"the LUUG") is dedicated to improving the computing skills of its members,
+supporting Linux and Unix use on campus, and serving the community through Free
+Software and open data.</p>
+
+<h3>Officers</h3>
+<dl class='officers-list'>
+
+        <dt>President</dt>
+        <dd>Jacob Melton</dd>
+        <dd><a href='mailto:uncurlhalo@vtluug.org'>uncurlhalo@vtluug.org</a></dd>
+
+        <dt>Vice President</dt>
+        <dd>Marcus Wanners</dd>
+        <dd><a href='mailto:marcus@vtluug.org'>marcus@vtluug.org</a></dd>
+
+        <dt>Treasurer</dt>
+        <dd>John Volk</dd>
+        <dd><a href='mailto:johnv@vtluug.org'>johnv@vtluug.org</a></dd>
+
+        <dt>Sysadmin</dt>
+        <dd>VACANT</dd>
+        <dd><a href='mailto:sysadmins@vtluug.org'>sysadmins@vtluug.org</a></dd>
+</dl>
+
+<h3>History and Status</h3>
+<div class='captioned-image' style='float:right'>
+        <img src='vtluug-small.gif' alt='' />
+        <p>The VTLUUG logo in 2002</p>
+</div>
+<p>The Linux and Unix Users Group was founded in 1997. To avoid a name
+collision with the Vermont Linux Users Group, the organization chose the name
+"Linux/Unix Users' Group". To simplify the punctuation and comply with
+Virginia Tech policy regarding student organization names, the slash and
+apostrophe were dropped and the school affiliation was moved to the end of the
+name. The historical abbreviation of VTLUUG and domain name of
+<code>vtluug.org</code> have been kept, as they are not directly addressed by
+the relevant policies. Our status with Virginia Polytechnic Institute and
+State University is that of an undergraduate, special interest, registered
+student organization.</p>
+
+<p>We consider anyone that idles in our IRC channel or is a member of our
+listserv to be a member of the VTLUUG. You don't have to attend our weekly
+meetings, come to any of our events, or pay membership dues. In fact, you don't
+even have to attend Virginia Tech; we welcome anyone interested in Linux and
+Unix and have plenty of members that don't even live anywhere near
+Blacksburg.</p>
+
+
+	</div>
+
+	<div id='footer'>
+		Copyright &copy; 2016 The Linux and Unix Users Group at Virginia Tech. <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/us/' rel='license external'>Some rights reserved.</a>
+	</div>
+    </div>
+</div>
+
+<div id="gatekeeper"></div>
+</body>
+</html>
+
+
+
+<!--
+     FILE ARCHIVED ON 18:10:06 May 18, 2016 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 1:15:19 Jan 4, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
