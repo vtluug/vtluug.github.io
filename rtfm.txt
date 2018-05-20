@@ -3,6 +3,29 @@ This document describes how to build the infrastructure from scratch, as well ma
 'SCRIPTS' refers to the scripts repo, found at https://github.com/vtluug/scripts
 
 
+Table of Contents
+1. Installation
+2. Networking
+3. Configuration
+
+
+
+Installation
+============
+
+All Hosts
+- Set static ip and gateway as indicated in SCRIPTS/router/lan/local_hosts, and set the subnet mask to 255.255.0.0
+
+Proxmox Hosts
+- Use vtluug+notifications@gmail.com for the email address requested at installation
+
+Non-Proxmox Hosts
+- Create an admin user that is *not* the same as your ldap username
+
+More configuration will be done in the 'Configuration' section after Networking
+
+
+
 Networking
 ==========
 - Set up physical boxes based on architecture_pic.png TODO
@@ -27,3 +50,51 @@ Configure ARP Proxying
 - Start and enable arp_proxy.service
 
 Configure dnsmasq (DHCP/DNS) & resolv.conf
+- Install dnsmasq
+- Copy SCRIPTS/router/lan/dnsmasq.conf into /etc/dnsmasq.conf
+- Copy SCRIPTS/router/lan/local_hosts into /usr/local/bin
+- Copy SCRIPTS/router/lan/resolv.conf into /etc/resolv.conf
+- Start and enable dnsmasq.service
+
+Configure iptables (NAT/Firewall)
+- Install iptables
+- Copy SCRIPTS/router/lan/vtluug_iptables.sh into /usr/local/bin
+- Copy SCRIPTS/router/lan/vtluug_iptables.service into /etc/systemd/system
+- Start and enable vtluug_iptables.service
+
+
+
+Configuration
+=============
+
+Non-Ansible
+-----------
+
+Proxmox
+- Create an admin user with sudo privileges, *not* using the same username as your ldap username
+- Create the cluster following this guide: https://pve.proxmox.com/wiki/Cluster_Manager
+- If you use firefox and a touchscreen you must disable 'dom.w3c_touch_events.enabled' in about:config for the Proxmox web GUI to work on your device
+    - Yeah, it's stupid; get over it
+
+**At this point, all bare metal hosts should have an admin user created, so root ssh will be disabled in the following section
+
+Non-Proxmox
+- TODO
+
+
+Ansible
+-------
+
+First, clone the repo at https://github.com/vtluug/ansible
+
+
+All Hosts
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u <admin-user>'
+
+Proxmox
+- Ansible configured most of postfix, but auth still needs to be configured
+- On each Proxmox host, put 'smtp.gmail.com:587 vtluug.notifications@gmail.com:<password>' in /etc/postfix/sasl_passwd
+    - The password can be found in the private accounts repo
+- Run 'postmap /etc/postfix/sasl_passwd' then 'rm /etc/postfix/sasl_passwd'
+- Restart postfix
+- Verify email is working properly: 'echo test | mail -s testing you@email.com' and look in /var/log/mail.log for errors
