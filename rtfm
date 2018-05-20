@@ -1,0 +1,29 @@
+This document describes how to build the infrastructure from scratch, as well manage it in general. 
+
+'SCRIPTS' refers to the scripts repo, found at https://github.com/vtluug/scripts
+
+
+Networking
+==========
+- Set up physical boxes based on architecture_pic.png TODO
+- Determine the ip addresses based on file_from_scripts_repo.txt
+
+
+Switch
+------
+- Ensure IGMP multicast querying & snooping are enabled. Test it here: https://pve.proxmox.com/wiki/Multicast_notes#Using_omping_to_test_multicast
+    - This is required for the Proxmox cluster
+
+
+Router (Debian)
+---------------
+
+Configure IP addresses
+- Copy SCRIPTS/router/ip-config/interfaces into /etc/network/interfaces
+
+Configure ARP Proxying
+- Copy SCRIPTS/router/proxy/arp_proxy.sh into /usr/local/bin/
+- Copy SCRIPTS/router/proxy/arp_proxy.service into /etc/systemd/system
+- Start and enable arp_proxy.service
+
+Configure dnsmasq (DHCP/DNS) & resolv.conf
