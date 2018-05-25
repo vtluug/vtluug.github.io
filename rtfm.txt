@@ -1,6 +1,9 @@
 This document describes how to build the infrastructure from scratch, as well manage it in general. 
 
 'SCRIPTS' refers to the scripts repo, found at https://github.com/vtluug/scripts
+'ANSIBLE' refers to the ansible repo, found at https://github.com/vtluug/ansible
+
+You need both to setup infra, also install 'ansible'.
 
 
 Table of Contents
@@ -21,6 +24,9 @@ Proxmox Hosts
 
 Non-Proxmox Hosts
 - Create an admin user that is *not* the same as your ldap username
+
+
+If any hosts are installed without internet connection, make sure you install & enable ssh, and install python internet works.
 
 More configuration will be done in the 'Configuration' section after Networking
 
@@ -66,35 +72,47 @@ Configure iptables (NAT/Firewall)
 
 Configuration
 =============
+These steps MUST be done in order. YMMV otherwise.
 
-Non-Ansible
------------
-
-Proxmox
+Proxmox Hosts
 - Create an admin user with sudo privileges, *not* using the same username as your ldap username
 - Create the cluster following this guide: https://pve.proxmox.com/wiki/Cluster_Manager
 - If you use firefox and a touchscreen you must disable 'dom.w3c_touch_events.enabled' in about:config for the Proxmox web GUI to work on your device
     - Yeah, it's stupid; get over it
 
-**At this point, all bare metal hosts should have an admin user created, so root ssh will be disabled in the following section
-
-Non-Proxmox
-- TODO
+**At this point, all bare metal hosts should have an admin user created, so root ssh will be disabled in the following step
 
 
-Ansible
--------
+Baremetal Hosts
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u <admin-user> --limit=baremetal'
+    - Configures most things and sets NFS exports, but the ZFS pools still need to be made a few other things need to be done manually as well
 
-First, clone the repo at https://github.com/vtluug/ansible
-
-
-All Hosts
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u <admin-user>'
-
-Proxmox
+Proxmox Hosts
 - Ansible configured most of postfix, but auth still needs to be configured
 - On each Proxmox host, put 'smtp.gmail.com:587 vtluug.notifications@gmail.com:<password>' in /etc/postfix/sasl_passwd
     - The password can be found in the private accounts repo
 - Run 'postmap /etc/postfix/sasl_passwd' then 'rm /etc/postfix/sasl_passwd'
 - Restart postfix
 - Verify email is working properly: 'echo test | mail -s testing you@email.com' and look in /var/log/mail.log for errors
+
+Nfs-backup (shellshock AND cyberdelia)
+- Shellshock - 3 500GB drives in a raidz2 zfs pool named 'keg'
+    - To build the zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
+    - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
+    - Create the following directories by running 'zfs create <directory>':
+        - keg/nfs
+        - keg/nfs/backup
+        - keg/nfs/scratch
+- Cyberdelia - 7 1TB drives in a raidz3 zfs pool named 'tank'
+    - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_7_id>
+    - Create the following directories by running 'zfs create <directory>':
+        - tank/nfs
+        - tank/nfs/backup
+        - tank/nfs/scratch
+
+Nfs-main (dirtycow)
+- Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
+    - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_8_id>
+    - Create the following directories by running 'zfs create <directory>':
+        - TODO
+
