@@ -3,7 +3,9 @@ This document describes how to build the infrastructure from scratch, as well ma
 'SCRIPTS' refers to the scripts repo, found at https://github.com/vtluug/scripts
 'ANSIBLE' refers to the ansible repo, found at https://github.com/vtluug/ansible
 
-You need both to setup infra, also install 'ansible'.
+For ansible:
+- Install it
+- Install any additional packages in the ansible readmeg
 
 
 Table of Contents
@@ -23,10 +25,10 @@ Proxmox Hosts
 - Use vtluug+notifications@gmail.com for the email address requested at installation
 
 Non-Proxmox Hosts
-- Create an admin user that is *not* the same as your ldap username
+- Create the papatux user with the password in the vtluug-admin repo
+    - This is used as a general admin account
 
-
-If any hosts are installed without internet connection, make sure you install & enable ssh, and install python internet works.
+If any hosts are installed without internet connection, make sure you install & enable ssh, and install python once internet works.
 
 More configuration will be done in the 'Configuration' section after Networking
 
@@ -75,7 +77,7 @@ Configuration
 These steps MUST be done in order. YMMV otherwise.
 
 Proxmox Hosts
-- Create an admin user with sudo privileges, *not* using the same username as your ldap username
+- Create the papatux user with sudo privileges, *not* using the same username as your ldap username
 - Create the cluster following this guide: https://pve.proxmox.com/wiki/Cluster_Manager
 - If you use firefox and a touchscreen you must disable 'dom.w3c_touch_events.enabled' in about:config for the Proxmox web GUI to work on your device
     - Yeah, it's stupid; get over it
@@ -84,7 +86,8 @@ Proxmox Hosts
 
 
 Baremetal Hosts
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u <admin-user> --limit=baremetal'
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=baremetal'
+    - ***After this initial run, you NO LONGER need to specify -K for papatux***
     - Configures most things and sets NFS exports, but the ZFS pools still need to be made a few other things need to be done manually as well
 
 Proxmox Hosts
@@ -95,14 +98,18 @@ Proxmox Hosts
 - Restart postfix
 - Verify email is working properly: 'echo test | mail -s testing you@email.com' and look in /var/log/mail.log for errors
 
-Nfs-backup (shellshock AND cyberdelia)
-- Shellshock - 3 500GB drives in a raidz2 zfs pool named 'keg'
-    - To build the zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
-    - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
+NFS
+- Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
+    - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_8_id>
     - Create the following directories by running 'zfs create <directory>':
-        - keg/nfs
-        - keg/nfs/backup
-        - keg/nfs/scratch
+        - cistern/nfs
+        - cistern/nfs/pve
+        - cistern/nfs/pve/images
+        - cistern/nfs/pve/isos
+        - cistern/nfs/pve/templates
+        - cistern/nfs/home
+        - cistern/nfs/scratch
+
 - Cyberdelia - 7 1TB drives in a raidz3 zfs pool named 'tank'
     - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_7_id>
     - Create the following directories by running 'zfs create <directory>':
@@ -110,9 +117,60 @@ Nfs-backup (shellshock AND cyberdelia)
         - tank/nfs/backup
         - tank/nfs/scratch
 
-Nfs-main (dirtycow)
-- Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
-    - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_8_id>
+- Shellshock - 3 500GB drives in a raidz2 zfs pool named 'keg'
+    - To build the zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
+    - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
     - Create the following directories by running 'zfs create <directory>':
-        - TODO
+        - keg/nfs
+        - keg/nfs/backup
+        - keg/nfs/scratch
 
+Creating the VM templates
+- We need to manually install a VM first, then we'll make that into a few templates to build everything else on
+- Don't worry, this is the only part involving touching the GUI :P
+- Download the latest debian iso to dirtycow.private.vtluug.org:/cistern/nfs/pve/isos/template/iso/
+    - Go to https://10.98.0.3:8006, and log in as root
+    - Creating the base template
+        - Click 'Create VM' in the top right corner
+        - Check the 'Advanced' checkbox in the bottom right corneri
+        - In the 'General' tab, put 'template-tiny' in the 'Name' field and check the 'Start at boot' checkbox
+        - In the 'OS' tab, select 'dirtycow_isos' in the 'Storage' field and the latest debian iso you just downloaded in the 'ISO image' field
+        - In the 'Hard Disk' tab, select 'dirtycow_images' is selected in the 'Storage' field and put '10' in the 'Disk size (GiB)' field
+        - In the 'CPU' tab, select '1' in the 'Cores' field
+        - In the 'Memory' tab, put '1024' in the 'Memory (MiB)' field
+        - In the 'Network' tab, do nothing
+        - In the 'Confirm' tab, make sure everything is correct
+        - Finally, click 'Finish'
+        - Once installation is finished we'll convert this into a template and make the 'template-small' and 'template-medium' templates then create the actual VMs from those
+    - Installing the base template
+        - In the top right corner, select 'Start'
+        - From the left inner sidebar, select 'Console' to see a VNC session of the VM
+        - Use the default options until you get to the Hostname prompt, and use 'template' (Note: *not* template-tiny)
+        - Leave the Domain name prompt empty
+        - Use our typical root password
+        - Use 'papatux' for the name and username, and the password from the vtluug-admin repo for the password
+        - Use the default options until you get to the 'Software selection' prompt
+        - Do *NOT* install a gui, select *ONLY* 'SSH server' and 'standard system utilties' form the menu then Continue
+        - Use the default options
+        - Reboot into the system, install 'sudo' and add papatux to the sudo group (Required for ansible)
+        - Select 'Shutdown' in the top right corner
+        - Still on the 'Hardware' tab, right click on 'CD/DVD Drive' and select 'Do not use any media'
+        - In case you're wondering, MACs are automatically changed during a clone
+    - Creating the templates
+        - From the left outer sidebar, select Datacenter > meltdown > 100 (template-tiny)
+        - Select More > Convert to template
+        - Select More > Clone
+        - Put 'template-small' in the 'Name' field
+        - Select 'Full Clone' in the 'Mode fieldk
+        - From the left outer sidebar, select Datacenter > meltdown > 100 (template-small)
+        - Select 'Hardware' in the left inner sidebar
+        - Double click 'Memory' and change it to '2048'
+        - Double click 'Processors' and change it to '2'
+        - Cilck More > Convert to template from the top right corner
+        - Repeat these steps, except name the template 'template-medium', use 4 cores, and 4096 Memory
+
+Creating the VMs
+- Set the PROXMOX_PASSWORD environment variable to the root proxmox password
+- Run 'ansible-playbook deploy.yml -i hosts.cfg -K -u papatux --ask-pass'
+    - -K and --ask-pass are used because newly deployed vms don't have ssh keys or passwordless sudo yet
+    - This will result in some hosts showing "unreachable" because the new VMs are rebooted after hostname & ip changes
