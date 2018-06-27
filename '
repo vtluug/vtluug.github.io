@@ -15,8 +15,8 @@ Table of Contents
 
 
 
-Installation (Baremetal)
-========================
+Installation
+============
 
 All Hosts
 - Set static ip and gateway as indicated in SCRIPTS/router/lan/local_hosts, and set the subnet mask to 255.255.0.0
@@ -148,7 +148,7 @@ Creating the VM templates
         - Reboot into the system, install sudo if not already installed, and make sure papatux is in the sudo/wheel group (depending on distro)
         - Run 'sudo apt install python' bc ansible requires python2
         - Also run 'sudo rm /etc/machin-id' and edit /etc/crontab:
-            - Add '@reboot root test -f /etc/machine-id || ( systemd-machine-id-setup && reboot )'
+            - Add '@reboot root test -x /etc/machine-id || systemd-machine-id
             - This creates unique uuids for VMs; otherwise they'd all be the same
         - Select 'Shutdown' in the top right corner
         - Still on the 'Hardware' tab, right click on 'CD/DVD Drive' and select 'Do not use any media'
@@ -180,8 +180,11 @@ Creating the VMs
     - This will result in some hosts showing "unreachable" because the new VMs are rebooted after hostname & ip changes
 - If some hosts are *not* successfully created, remove those V
 
+Configuring the new VMs
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux -k --limit=vms'
+    - This mostly configures all the new vms
+
 - Installing FreeIPA Server
-    - This step is not automated because it is only done once, and you should be aware of how it's configured
     - ssh into chimera, then run 'ipa-server-install' and set the following options:
     - Do you want to configure integrated DNS (BIND)? [no]: yes
     - Server host name: chimera.private.vtluug.org
@@ -193,8 +196,3 @@ Creating the VMs
     - Search for missing reverse zones: yes
     - Continue to configure system with these values: yes
     - Test it by running 'kinit admin'
-
-Configuring the new VMs
-- Set the IPA_PASSWORD equal to the admin PW found in the accounts file in gitolite-admin
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux -k --limit=vms'
-    - This mostly configures all the new vms
