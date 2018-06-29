@@ -13,6 +13,31 @@ Table of Contents
 2. Networking
 3. Configuration
 
+Summary
+======
+NFS Configuration:
+- All hosts:
+    - 755 root:root         /nfs
+    - 755 www-data:www-data /nfs/files          10.98.0.7:/cistern/nfs/files
+    - 755 root:root         /nfs/share
+    - 755 root:root         /nfs/scratch
+    - 777 root:root         /nfs/share/cistern  10.98.0.7:/cistern/nfs/share
+    - 775 nobody:users      /nfs/share/tank     10.98.0.6:/tank/nfs/share
+    - 775 nobody:users      /nfs/share/keg      10.98.0.8:/cistern/nfs/share
+    - 777 root:root         /nfs/scratch/tank   10.98.0.6:/tank/nfs/backup
+    - 777 root:root         /nfs/scratch/keg    10.98.0.8:/keg/nfs/backup
+- All hosts EXCEPT Proxmox:
+    - 755 root:root         /home               10.98.0.7:/cistern/nfs/home
+- Proxmox VM storage:
+    - Handles all the details; we only provide export path, storage type, and storage id
+    - images    cistern-images    10.98.0.7:/cistern/nfs/pve/images
+    - isos      cistern-isos      10.98.0.7:/cistern/nfs/pve/isos
+    - templates cistern-templates 10.98.0.7:/cistern/nfs/pve/templates
+    - backup    tank-backup       10.98.0.6:/tank/nfs/pve/backup
+    - backup    keg-backup        10.98.0.6:/keg/nfs/pve/backup
+- Sczi:
+    - 755 root:root /nfs/srv 10.98.0.7:/cistern/nfs/srv
+
 
 
 Installation (Baremetal)
