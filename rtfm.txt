@@ -9,6 +9,7 @@ For ansible:
 
 
 Table of Contents
+0. Summary
 1. Installation
 2. Networking
 3. Configuration
@@ -16,35 +17,32 @@ Table of Contents
 Summary
 ======
 NFS Configuration:
-- All hosts:
-    - 755 root:root         /nfs
-    - 755 www-data:www-data /nfs/files          10.98.0.7:/cistern/nfs/files
-    - 755 root:root         /nfs/share
-    - 755 root:root         /nfs/scratch
-    - 777 root:root         /nfs/share/cistern  10.98.0.7:/cistern/nfs/share
-    - 775 nobody:users      /nfs/share/tank     10.98.0.6:/tank/nfs/share
-    - 775 nobody:users      /nfs/share/keg      10.98.0.8:/cistern/nfs/share
-    - 777 root:root         /nfs/scratch/tank   10.98.0.6:/tank/nfs/backup
-    - 777 root:root         /nfs/scratch/keg    10.98.0.8:/keg/nfs/backup
-- All hosts EXCEPT Proxmox:
-    - 755 root:root         /home               10.98.0.7:/cistern/nfs/home
 - Proxmox VM storage:
     - Handles all the details; we only provide export path, storage type, and storage id
     - images    cistern-images    10.98.0.7:/cistern/nfs/pve/images
     - isos      cistern-isos      10.98.0.7:/cistern/nfs/pve/isos
-    - templates cistern-templates 10.98.0.7:/cistern/nfs/pve/templates
     - backup    tank-backup       10.98.0.6:/tank/nfs/pve/backup
-    - backup    keg-backup        10.98.0.6:/keg/nfs/pve/backup
+    - backup    keg-backup        10.98.0.8:/keg/nfs/pve/backup
+- All hosts:
+    - 755 root:root         /nfs
+    - 755 root:root         /nfs/tank
+    - 775 nobody:users      /nfs/tank/share     10.98.0.6:/tank/nfs/share
+    - 777 root:root         /nfs/tank/scratch   10.98.0.6:/tank/nfs/scratch
+    - 755 root:root         /nfs/cistern
+    - 775 nobody:users      /nfs/cistern/share  10.98.0.7:/cistern/nfs/share
+    - 755 root:root         /nfs/keg
+    - 775 nobody:users      /nfs/keg/share      10.98.0.8:/keg/nfs/share
+    - 777 root:root         /nfs/keg/scratch    10.98.0.8:/keg/nfs/scratch
+- All hosts EXCEPT Proxmox:
+    - 755 root:root         /home               10.98.0.7:/cistern/nfs/home
+    - 755 www-data:www-data /nfs/cistern/files  10.98.0.7:/cistern/nfs/files
 - Sczi:
-    - 755 root:root /nfs/srv 10.98.0.7:/cistern/nfs/srv
+    - 755 root:root /nfs/cistern/srv 10.98.0.7:/cistern/nfs/srv
 
 
 
 Installation (Baremetal)
 ========================
-
-All Hosts
-- Set static ip and gateway as indicated in SCRIPTS/router/lan/local_hosts, and set the subnet mask to 255.255.0.0
 
 Proxmox Hosts
 - Use vtluug+notifications@gmail.com for the email address requested at installation
@@ -61,8 +59,9 @@ More configuration will be done in the 'Configuration' section after Networking
 
 Networking
 ==========
+- IPs and MACs of hosts are listed in scripts/router/lan/local_hosts
+- Hosts get IPv4 address assigned using DHCP based on MAC, and IPv6 are assigned using SLAAC
 - Set up physical boxes based on architecture_pic.png TODO
-- Determine the ip addresses based on file_from_scripts_repo.txt
 
 
 Switch
@@ -82,7 +81,7 @@ Configure ARP Proxying
 - Copy SCRIPTS/router/proxy/arp_proxy.service into /etc/systemd/system
 - Start and enable arp_proxy.service
 
-Configure dnsmasq (DHCP/DNS) & resolv.conf
+Configure dnsmasq (DHCP/SLAAC/DNS) & resolv.conf
 - Install dnsmasq
 - Copy SCRIPTS/router/lan/dnsmasq.conf into /etc/dnsmasq.conf
 - Copy SCRIPTS/router/lan/local_hosts into /usr/local/bin
@@ -116,31 +115,16 @@ Baremetal Hosts
     - Configures most things and sets NFS exports, but the ZFS pools still need to be made a few other things need to be done manually as well
 
 NFS
-- Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
-    - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_8_id>
-    - Create the following directories by running 'zfs create <directory>':
-        - cistern/nfs
-        - cistern/nfs/pve
-        - cistern/nfs/pve/images
-        - cistern/nfs/pve/isos
-        - cistern/nfs/pve/templates
-        - cistern/nfs/home
-        - cistern/nfs/scratch
-
+To build each zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
 - Cyberdelia - 7 1TB drives in a raidz3 zfs pool named 'tank'
     - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_7_id>
-    - Create the following directories by running 'zfs create <directory>':
-        - tank/nfs
-        - tank/nfs/backup
-        - tank/nfs/scratch
-
+- Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
+    - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_8_id>
 - Shellshock - 3 500GB drives in a raidz2 zfs pool named 'keg'
-    - To build the zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
     - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
-    - Create the following directories by running 'zfs create <directory>':
-        - keg/nfs
-        - keg/nfs/backup
-        - keg/nfs/scratch
+- Run 'zfs create <directory>' accoring to the 'NFS Configuration' section in the beginning of the document.
+- Set the proper permissions accoring to the 'NFS Configuration' section as well.
+
 
 Creating the VM templates
 - We need to manually install a VM first, then we'll make that into a few templates to build everything else on
@@ -200,26 +184,36 @@ Creating the VM templates
 
 Creating the VMs
 - Set the PROXMOX_PASSWORD environment variable to the root proxmox password
-- Run 'ansible-playbook deploy.yml -i hosts.cfg -K -u papatux -k'
-    - -K and --ask-pass are used because newly deployed vms don't have ssh keys or passwordless sudo yet
+- Run 'ansible-playbook deploy.yml -i hosts.cfg -u papatux -k -K'
+    - -K and -k are used because newly deployed vms don't have ssh keys or passwordless sudo (yet)
     - This will result in some hosts showing "unreachable" because the new VMs are rebooted after hostname & ip changes
-- If some hosts are *not* successfully created, remove those V
+- If some hosts are *not* successfully created, remove those and try again (this shouldn't happen)
 
-- Installing FreeIPA Server
-    - This step is not automated because it is only done once, and you should be aware of how it's configured
-    - ssh into chimera, then run 'ipa-server-install' and set the following options:
-    - Do you want to configure integrated DNS (BIND)? [no]: yes
-    - Server host name: chimera.private.vtluug.org
-    - Domain name: krb.vtluug.org
-    - Realm name: KRB.VTLUUG.ORG
-    - Directory Manager PW: see accounts file in gitolite-admin
-    - admin PW: See accounts file in gitolite-admin
-    - Configure DNS forwarders: yes
-    - Search for missing reverse zones: yes
-    - Continue to configure system with these values: yes
-    - Test it by running 'kinit admin'
+- Configuring FreeIPA Server
+    - First run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k K --limit=chimera.private.vtluug.org' to install all the required packages
+    - Reboot chimera, since some tasks require a reboot to take effect
+    - The configuration is not automated because it is only done once, and you should be aware of how it's configured
+    - ssh into chimera,
+    - Run 'ipa-server-install' (as root)
+    - Use these options:
+        - Do you want to configure integrated DNS (BIND)? [no]: yes
+        - Server host name: chimera.private.vtluug.org
+        - Domain name: krb.vtluug.org
+        - Realm name: KRB.VTLUUG.ORG
+        - Directory Manager PW: see accounts file in gitolite-admin
+        - admin PW: See accounts file in gitolite-admin
+        - Configure DNS forwarders: yes
+        - Search for missing reverse zones: yes
+        - Continue to configure system with these values: yes
+    - Run 'kinit admin' to authenticate as admin
+    - Create 'users' and 'officers' groups and change the default shell
+        - 'ipa group-add users --desc "All VTLUUG members"'
+        - 'ipa group-add officers --desc "VTLUUG officers"'
+        - 'ipa config-mod --defaultgroup users'
+        - 'ipa config-mod --defaultshell=/bin/bash'
 
-Configuring the new VMs
-- Set the IPA_PASSWORD equal to the admin PW found in the accounts file in gitolite-admin
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux -k --limit=vms'
-    - This mostly configures all the new vms
+Configuring the new VM (And the nfs hosts for freeipa login)
+- Set the IPA_PASSWORD environmental variable equal to the admin PW found in the accounts file in gitolite-admin
+- Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit=nfs'
+- Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit=vms'
+    - This mostly configures all the new hosts
