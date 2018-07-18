@@ -106,16 +106,12 @@ Proxmox Hosts
 - If you use firefox and a touchscreen you must disable 'dom.w3c_touch_events.enabled' in about:config for the Proxmox web GUI to work on your device
     - Yeah, it's stupid; get over it
 
+Ensure python is installed on all bare metal hosts
 **At this point, all bare metal hosts should have an admin user created, so root ssh will be disabled in the following step
-
-
-Baremetal Hosts
-- Make sure you've copied your ssh key to all the baremetal servers so ansible works
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=baremetal'
-    - Configures most things and sets NFS exports, but the ZFS pools still need to be made a few other things need to be done manually as well
 
 NFS
 To build each zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
+- Install 'zfsutils-linux' firs to install the zfs utils
 - Cyberdelia - 7 1TB drives in a raidz3 zfs pool named 'tank'
     - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_7_id>
 - Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
@@ -124,6 +120,11 @@ To build each zfs pool, first look up the device ids in /dev/disk/by-id since th
     - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
 - Run 'zfs create <directory>' accoring to the 'NFS Configuration' section in the beginning of the document.
 - Set the proper permissions accoring to the 'NFS Configuration' section as well.
+
+Baremetal Hosts
+- Make sure you've copied your ssh key to all the baremetal servers so ansible works
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=baremetal'
+    - Configures most things for us
 
 
 Creating the VM templates
@@ -186,8 +187,8 @@ Creating the VMs
 - Set the PROXMOX_PASSWORD environment variable to the root proxmox password
 - Run 'ansible-playbook deploy.yml -i hosts.cfg -u papatux -k -K'
     - -K and -k are used because newly deployed vms don't have ssh keys or passwordless sudo (yet)
-    - This will result in some hosts showing "unreachable" because the new VMs are rebooted after hostname & ip changes
-- If some hosts are *not* successfully created, remove those and try again (this shouldn't happen)
+    - This will result in some hosts showing "unreachable" because some VMs require a reboot after initial configuration
+- If some hosts are *not* successfully created, remove those (from proxmox) and try again (this shouldn't happen)
 
 - Configuring FreeIPA Server
     - First run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k K --limit=chimera.private.vtluug.org' to install all the required packages
@@ -212,8 +213,10 @@ Creating the VMs
         - 'ipa config-mod --defaultgroup users'
         - 'ipa config-mod --defaultshell=/bin/bash'
 
+Configure NFS for freeipa login
+    - Since FreeIPA didn't exist when we configured NFS, you need to do a bit of config
+    - Run 'ipa-client-install -U --domain=krb.vtluug.org --server=chimera.private.vtluug.org --principal=admin --password=$FREEIPA_ADMIN_PASSWORD
+
 Configuring the new VM (And the nfs hosts for freeipa login)
-- Set the IPA_PASSWORD environmental variable equal to the admin PW found in the accounts file in gitolite-admin
-- Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit=nfs'
 - Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit=vms'
     - This mostly configures all the new hosts
