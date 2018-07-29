@@ -123,6 +123,8 @@ Baremetal Hosts
 Create the VMs
 - Run 'ansible-playbook deploy.yml -i hosts.cfg -u papatux -k -K'
 
+Go into to one of the VMs and get the primary interface, then put that in ANSIBLE/hosts.cfg
+
 - Configuring FreeIPA Server
     - First run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k K --limit=chimera.private.vtluug.org' to install all the required packages
     - Reboot chimera, since some tasks require a reboot to take effect
