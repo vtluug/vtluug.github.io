@@ -5,7 +5,7 @@ This document describes how to build the infrastructure from scratch, as well ma
 
 For ansible:
 - Install it
-- Install any additional packages in the ansible readmeg
+- Install any additional packages in the ansible readme
 
 
 Table of Contents
@@ -17,26 +17,24 @@ Table of Contents
 Summary
 ======
 NFS Configuration:
-- Proxmox VM storage:
-    - Handles all the details; we only provide export path, storage type, and storage id
-    - images    cistern-images    10.98.0.7:/cistern/nfs/pve/images
-    - isos      cistern-isos      10.98.0.7:/cistern/nfs/pve/isos
-    - backup    tank-backup       10.98.0.6:/tank/nfs/pve/backup
-    - backup    keg-backup        10.98.0.8:/keg/nfs/pve/backup
 - All hosts:
+    - 755 root:root         /home               10.98.0.7:/cistern/nfs/home
     - 755 root:root         /nfs
     - 755 root:root         /nfs/tank
     - 775 nobody:users      /nfs/tank/share     10.98.0.6:/tank/nfs/share
     - 777 root:root         /nfs/tank/scratch   10.98.0.6:/tank/nfs/scratch
     - 755 root:root         /nfs/cistern
     - 775 nobody:users      /nfs/cistern/share  10.98.0.7:/cistern/nfs/share
+    - 755 www-data:www-data /nfs/cistern/files  10.98.0.7:/cistern/nfs/files
     - 755 root:root         /nfs/keg
     - 775 nobody:users      /nfs/keg/share      10.98.0.8:/keg/nfs/share
-    - 777 root:root         /nfs/keg/scratch    10.98.0.8:/keg/nfs/scratch
-- All hosts EXCEPT Proxmox:
-    - 755 root:root         /home               10.98.0.7:/cistern/nfs/home
-    - 755 www-data:www-data /nfs/cistern/files  10.98.0.7:/cistern/nfs/files
-- Sczi:
+- Libvirt hosts only (meltdown, spectre):
+    - 755 root:root         /nfs/cistern/libvirt
+    - 755 root:root         /nfs/cistern/libvirt/images 10.98.0.7:/cistern/nfs/libvirt/images
+    - 755 root:root         /nfs/cistern/libvirt/images/meltdown (meltdown ONLY)
+    - 755 root:root         /nfs/cistern/libvirt/images/spectre  (spectre ONLY)
+    - 755 root:root         /nfs/cistern/libvirt/isos   10.98.0.7:/cistern/nfs/libvirt/isos
+- Sczi only:
     - 755 root:root /nfs/cistern/srv 10.98.0.7:/cistern/nfs/srv
 
 
@@ -44,10 +42,7 @@ NFS Configuration:
 Installation (Baremetal)
 ========================
 
-Proxmox Hosts
-- Use vtluug+notifications@gmail.com for the email address requested at installation
-
-Non-Proxmox Hosts
+All hosts
 - Create the papatux user with the password in the vtluug-admin repo
     - This is used as a general admin account
 
@@ -61,13 +56,9 @@ Networking
 ==========
 - IPs and MACs of hosts are listed in scripts/router/lan/local_hosts
 - Hosts get IPv4 address assigned using DHCP based on MAC, and IPv6 are assigned using SLAAC
-- Set up physical boxes based on architecture_pic.png TODO
-
-
-Switch
-------
-- Ensure IGMP multicast querying & snooping are enabled. Test it here: https://pve.proxmox.com/wiki/Multicast_notes#Using_omping_to_test_multicast
-    - This is required for the Proxmox cluster
+- Set up physical boxes based on architecture_diagram.png TODO
+- In ansible/hosts.cfg, set the 'mac' and 'interface' for to set up bridging
+    - At time of writing, the mac option doesn't work (explained more below)
 
 
 Router (Debian)
@@ -95,23 +86,27 @@ Configure iptables (NAT/Firewall)
 - Start and enable vtluug_iptables.service
 
 
+Libvirt hosts (Ubuntu via netplan)
+----------------------------------
+
+- Configure the bridge interface
+    - Copy SCRIPTS/libvirt-hosts/ip-config/01-netcfg.yaml to /etc/netplan/01-netcfg.yaml
+    - Change $INTERFACE to the interface being bridged
+    - Run 'netplan apply'
+    - In SCRIPTS/router/lan/dnsmasq.conf add the new MACs to their respective dhcp-host lines
+    - Update dnsmasq on joey & apply changes
+    - Restart networking on the libvirt hosts
 
 Configuration
 =============
+
 These steps MUST be done in order. YMMV otherwise.
 
-Proxmox Hosts
-- Create the papatux user with sudo privileges, *not* using the same username as your ldap username
-- Create the cluster following this guide: https://pve.proxmox.com/wiki/Cluster_Manager
-- If you use firefox and a touchscreen you must disable 'dom.w3c_touch_events.enabled' in about:config for the Proxmox web GUI to work on your device
-    - Yeah, it's stupid; get over it
-
-Ensure python is installed on all bare metal hosts
-**At this point, all bare metal hosts should have an admin user created, so root ssh will be disabled in the following step
+At this point, all bare metal hosts should have an admin user created, so root ssh will be disabled in the following step
 
 NFS
 To build each zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
-- Install 'zfsutils-linux' firs to install the zfs utils
+- Install 'zfsutils-linux'
 - Cyberdelia - 7 1TB drives in a raidz3 zfs pool named 'tank'
     - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_7_id>
 - Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
@@ -119,76 +114,14 @@ To build each zfs pool, first look up the device ids in /dev/disk/by-id since th
 - Shellshock - 3 500GB drives in a raidz2 zfs pool named 'keg'
     - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
 - Run 'zfs create <directory>' accoring to the 'NFS Configuration' section in the beginning of the document.
-- Set the proper permissions accoring to the 'NFS Configuration' section as well.
 
 Baremetal Hosts
 - Make sure you've copied your ssh key to all the baremetal servers so ansible works
 - Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=baremetal'
     - Configures most things for us
 
-
-Creating the VM templates
-- We need to manually install a VM first, then we'll make that into a few templates to build everything else on
-- Don't worry, this is the only part involving touching the GUI :P
-- Download the latest ubuntu iso to dirtycow.private.vtluug.org:/cistern/nfs/pve/isos/template/iso/
-    - I recommend not using the net-installer for ubuntu if installing via VNC on proxmox
-    - Go to https://10.98.0.3:8006, and log in as root
-    - Creating the base template
-        - Click 'Create VM' in the top right corner
-        - Check the 'Advanced' checkbox in the bottom right corner
-        - In the 'General' tab, put 'ubuntu-tiny' in the 'Name' field and check the 'Start at boot' checkbox
-        - In the 'OS' tab, select 'dirtycow_isos' in the 'Storage' field and the latest ubuntu LTS (SERVER edition) you just downloaded in the 'ISO image' field
-        - In the 'Hard Disk' tab, select 'dirtycow_images' is selected in the 'Storage' field and put '10' in the 'Disk size (GiB)' field
-        - In the 'CPU' tab, select '1' in the 'Cores' field
-        - In the 'Memory' tab, put '1024' in the 'Memory (MiB)' field
-        - In the 'Network' tab, do nothing
-        - In the 'Confirm' tab, make sure everything is correct
-        - Finally, click 'Finish'
-        - Once installation is finished we'll convert this into a template and make the 'ubuntu-small' and 'ubuntu-medium' templates then create the actual VMs from those
-    - Installing the base template
-        - In the top right corner, select 'Start'
-        - From the left inner sidebar, select 'Console' to see a VNC session of the VM
-        - Use the default options until you get to the 'Hostname' prompt, and use 'template' (Note: *not* {ubuntu,centos}-tiny)
-        - Use 'papatux' for the name and username, and the password from the vtluug-admin repo for the password
-        - Use 'Guided - use entire disk' for partitioning
-        - Use the defaults then wait awhile...
-        - Select 'Install security updates automatically'
-        - At the 'Software Selection' screen, select 'OpenSSH server'
-        - Use the defaults then wait while it finishes installing
-        - Reboot into the system, install sudo if not already installed, and make sure papatux is in the sudo/wheel group (depending on distro)
-        - Run 'sudo apt install python' bc ansible requires python2
-        - Also run 'sudo rm /etc/machin-id' and edit /etc/crontab:
-            - Add '@reboot root test -f /etc/machine-id || ( systemd-machine-id-setup && reboot )'
-            - This creates unique uuids for VMs; otherwise they'd all be the same
-        - Select 'Shutdown' in the top right corner
-        - Still on the 'Hardware' tab, right click on 'CD/DVD Drive' and select 'Do not use any media'
-        - In case you're wondering, MACs are automatically changed during a clone
-    - Creating the templates
-        - Here, we're taking the VM just created, converting it to a template, then cloning it to make 2 more templates
-        - From the left outer sidebar, select Datacenter > meltdown > 100 (ubuntu-tiny)
-        - Select More > Convert to template
-        - Select More > Clone
-        - Put 'ubuntu-small' in the 'Name' field
-        - Select 'Full Clone' in the 'Mode' field then click 'Clone'
-        - From the left outer sidebar, select Datacenter > meltdown > 101 (ubuntu-small)
-        - Select 'Hardware' in the left inner sidebar
-        - Double click 'Memory' and change it to '2048'
-        - Double click 'Processors' and change it to '2'
-        - Cilck More > Convert to template from the top right corner
-        - Repeat these steps, except name the template 'ubuntu-medium', use 4 cores, and 4096 Memory
-    - Repeat the above steps using the latest Centos MINIMAL image, except only create the 'centos-tiny' template
-        - Note: Don't forget to set the hostname to 'template' during installation since it's less obvious
-        - This will (only) be used for the freeipa server, because fuck freeipa
-    - Finally, you should have a tiny, small, and medium ubuntu template, and a centos tiny template
-        - Where tiny = 1 core, 1GB ram, small = 2 core, 2GB ram, and medium = 4 core, 4GB ram
-
-
-Creating the VMs
-- Set the PROXMOX_PASSWORD environment variable to the root proxmox password
+Create the VMs
 - Run 'ansible-playbook deploy.yml -i hosts.cfg -u papatux -k -K'
-    - -K and -k are used because newly deployed vms don't have ssh keys or passwordless sudo (yet)
-    - This will result in some hosts showing "unreachable" because some VMs require a reboot after initial configuration
-- If some hosts are *not* successfully created, remove those (from proxmox) and try again (this shouldn't happen)
 
 - Configuring FreeIPA Server
     - First run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k K --limit=chimera.private.vtluug.org' to install all the required packages
@@ -217,6 +150,6 @@ Configure NFS for freeipa login
     - Since FreeIPA didn't exist when we configured NFS, you need to do a bit of config
     - Run 'ipa-client-install -U --domain=krb.vtluug.org --server=chimera.private.vtluug.org --principal=admin --password=$FREEIPA_ADMIN_PASSWORD
 
-Configuring the new VM (And the nfs hosts for freeipa login)
+Configure the new VMs
 - Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit=vms'
     - This mostly configures all the new hosts
