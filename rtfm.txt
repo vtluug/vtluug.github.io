@@ -14,6 +14,8 @@ Table of Contents
 2. Networking
 3. Configuration
 
+
+
 Summary
 ======
 NFS Configuration:
@@ -46,6 +48,8 @@ All hosts
 - Create the papatux user with the password in the vtluug-admin repo
     - This is used as a general admin account
 
+Disable root password login on the router. (Other hosts are managed via ansible)
+
 If any hosts are installed without internet connection, make sure you install & enable ssh, and install python once internet works.
 
 More configuration will be done in the 'Configuration' section after Networking
@@ -57,8 +61,6 @@ Networking
 - IPs and MACs of hosts are listed in scripts/router/lan/local_hosts
 - Hosts get IPv4 address assigned using DHCP based on MAC, and IPv6 are assigned using SLAAC
 - Set up physical boxes based on architecture_diagram.png TODO
-- In ansible/hosts.cfg, set the 'mac' and 'interface' for to set up bridging
-    - At time of writing, the mac option doesn't work (explained more below)
 
 
 Router (Debian)
@@ -92,10 +94,12 @@ Libvirt hosts (Ubuntu via netplan)
 - Configure the bridge interface
     - Copy SCRIPTS/libvirt-hosts/ip-config/01-netcfg.yaml to /etc/netplan/01-netcfg.yaml
     - Change $INTERFACE to the interface being bridged
+    - Change $MAC to the mac address specified in $SCRIPTS/router/lan/local_hosts
     - Run 'netplan apply'
-    - In SCRIPTS/router/lan/dnsmasq.conf add the new MACs to their respective dhcp-host lines
-    - Update dnsmasq on joey & apply changes
+    - Update dnsmasq on joey with the correct MAC address & apply changes
     - Restart networking on the libvirt hosts
+
+
 
 Configuration
 =============
