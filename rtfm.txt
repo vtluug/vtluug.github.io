@@ -48,6 +48,7 @@ All hosts
 - Create the papatux user with the password in the vtluug-admin repo
     - This is used as a general admin account
 - If > 1 drives are available, use 2 boot drives in raid
+- Open ssh port 2222 (and 22) since this is external blocked unless the IPs have exemptions.
 
 Router
 - Disable root password login over ssh.
