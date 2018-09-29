@@ -37,7 +37,9 @@ NFS Configuration:
     - 755 root:root     /nfs/cistern/libvirt/images/spectre  (spectre ONLY)
     - 755 root:root     /nfs/cistern/libvirt/isos   10.98.0.7:/cistern/nfs/libvirt/isos
 - Sczi only:
-    - 755 root:root /nfs/cistern/srv 10.98.0.7:/cistern/nfs/srv
+    - 755 root:root /nfs/cistern/srv            10.98.0.7:/cistern/nfs/srv
+    - 755 root:root /nfs/cistern/docker
+    - 755 root:root /nfs/cistern/docker/data    10.98.0.7:/cistern/nfs/docker/data
 - ZFS:
 - All of the paths listed above should be ZFS filesystems on their respective hosts uexcept the images and isos directory within libvirt, which should be manually created
 
@@ -145,12 +147,12 @@ Create the VMs
 Go into to one of the VMs and get the primary interface, then put that in ANSIBLE/hosts.cfg
 
 - Configuring FreeIPA Server
+    - The configuration is not automated because it is only done once, and you should be aware of how it's configured
     - Install packages freeipa-server, ipa-server-dns, and rng-tools
-    - In /etc/hosts, chimera's v6 address and its fqdn & hostname
+    - In /etc/hosts, add chimera's v6 address, fqdn, and hostname to the bottom
     - In /etc/NetworkManager/NetworkManager.conf, add 'dns=none' under [main]
     - In /etc/resolv.conf, replace the content with a v4 & v6 address (preferably VTs)
     - Reboot chimera (some pkgs need a reboot)
-    - The configuration is not automated because it is only done once, and you should be aware of how it's configured
     - Run 'ipa-server-install' (as root)
     - Use these options:
         - Do you want to configure integrated DNS (BIND)? [no]: yes
@@ -173,13 +175,21 @@ Go into to one of the VMs and get the primary interface, then put that in ANSIBL
 Configure baremetal for freeipa login & correct folder permissions
 ------------------------------------------------------------------
     - Run 'ipa-client-install -U --domain=krb.vtluug.org --server=chimera.vtluug.org --principal=admin --password=$FREEIPA_ADMIN_PASSWORD'
-    - Remove tha command from history
+    - Remove that command from history
     - For NFS hosts, set the proper permissions for nfs folders in the 'NFS Configuration' now that freeipa is working
     - Run the ansible scripts from 2 sections ago, but with '--tags' instead of '--skip-tags'
     - Run 'mount -a' on nfs hosts to mount dirs with correct permissions
 
 
-Configure the new VMs
----------------------
+Configure the new VMs (mostly)
+------------------------------
 - Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit=vms'
     - This mostly configures all the new hosts
+
+
+Szci Specific Config (Docker Services)
+--------------------------------------
+- Ansible should've pulled https://github.com/vtluug/apps.git into /nfs/cistern/docker/apps
+- Follow directions on the README for each of the services
+
+Acidburn specific config ???
