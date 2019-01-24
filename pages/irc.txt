@@ -1,0 +1,8 @@
+<p>Internet Relay Chat is a tried-and-true broadcast messaging protocol favored
+by free and open source software projects. The Linux and Unix Users Group at
+Virginia Tech has a relatively active channel, <code>#vtluug</code>, on <a
+href="http://oftc.net/">OFTC</a>.</p>
+<ul>
+<Li><a href="https://webchat.oftc.net/?channels=vtluug" rel='external'>Web access</a></li>
+<li><a href="ircs://irc.oftc.net:6697/vtluug">Link for native clients</a> (like <a href="/web/20160518144802/http://xchat.org/">XChat</a>)</li>
+</ul>

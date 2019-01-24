@@ -1,0 +1,47 @@
+<p>VTLUUG runs a number of services to support the Virginia Tech community. Since we don't charge dues,
+our hardware is funded entirely through any student organization funding we can get, so we are significantly
+limited in the services we can provide.  However, we accept server and hard drive donations through
+departmental transfers; the process for doing so is documented <a href='https://vtluug.org/wiki/Wishlist' rel='external'>on our wiki</a>.</p>
+
+<h3>Current services</h3>
+Services we currently provide include:
+<ul>
+<li>Installfests each semester</li>
+<li>Debian <a href='https://vtluug.org/wiki/Infrastructure:Acidburn'>shell
+accounts</a></li>
+<li>Email services</li>
+<li>Functional LDAP for vtluug services</li>
+<li><a href='https://bash.vtluug.org/' rel='external'>VT Bash</a>, a Virginia Tech
+    QDB</li>
+<li>A wiki for Virginia Tech, <a href='https://gobblerpedia.org/'
+rel='external'>Gobblerpedia</a></li>
+<li>A wiki for technical information about Virginia Tech and our own work</li>
+<li><a href='https://hokieprivacy.org' rel='external'>Hokie Privacy</a>, an outreach project documenting surveillance on-campus</li>
+</ul>
+
+<h3>Planned services</h3>
+Services we plan to expand or begin to provide in the near future include:
+<ul>
+<li>An expanded <a href='http://tahoe-lafs.org/' rel='external'>Tahoe-LAFS</a> grid</li>
+<li>User web hosting</li>
+<li>A mirror with more distributions</li>
+<li>Diaspora* Pod</li>
+</ul>
+
+<h3>Unmaintained services</h3>
+<p>We currently have a number of unmaintained services that are broken and in need of adoption.
+If you're interested in volunteering as a maintainer for one, please contact
+<a href='mailto:officers@vtluug.org'>officers@vtluug.org</a> or reach out to us via IRC.</p>
+
+<p>Current broken or out-of-date services include:</p>
+<ul>
+<li>A detailed <a href='http://map.vtluug.org/' rel='external'>map</a> of
+campus, Blacksburg, and the surrounding area</li>
+<li><a href='http://mirror.ece.vt.edu/' rel='external'>Mirroring</a> Linux and
+Unix distributions</li>
+<li>Git <a href='http://gitweb.vtluug.org/' rel='external'>hosting</a></li>
+<li>A <a href='https://torproject.org/' rel='external'>Tor</a> intermediate
+relay</a>
+<li>Full IPv6 support</li>
+<li>A finger server for Kerberos accounts (on acidburn)</li>
+</ul>

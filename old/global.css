@@ -1,0 +1,349 @@
+
+
+
+
+
+/*
+     FILE ARCHIVED ON 12:32:38 Jul 2, 2016 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 1:26:51 Jan 4, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+html
+{
+        height: 100%;
+}
+body
+{
+	margin: 0px;
+        padding: 0px;
+	background: #dbd8bc;
+	font-family: "DejaVu Sans", 'Bitstream Vera Sans', sans-serif;
+	font-size: 100%;
+        height: 100%;
+        width: 100%
+}
+
+#stickwrapper
+{
+        min-height: 100%;
+}
+
+#wrapper
+{
+	width: 1100px;
+        padding-top: 24px;
+	margin: 0 auto 0 auto;
+}
+
+/* Header {{{ */
+
+#header h1
+{
+	height: 200px;
+	margin: 0;
+	background: url(/logo.png) #5c0000 no-repeat;
+	color: #fff;
+	font-family: "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Lucida Console", monospace;
+	font-size: 2.0em;
+	font-weight: normal;
+	line-height: 1.2em;
+}
+
+#header h1 a
+{
+	display: block;
+	padding: 55px 500px 0 40px;
+	height: 100%;
+	color: #fff;
+	text-decoration: none;
+}
+
+#header h1 a:link,
+#header h1 a:visited
+{
+	text-shadow: #990000 0 0 20px;
+}
+
+#header h1 a:hover,
+#header h1 a:active
+{
+	text-shadow: #fff 0 0 20px;
+}
+
+/* }}} */
+
+/* Navbar {{{ */
+
+ul#navbar
+{
+	margin: 0;
+	padding: 0px 12px;
+	list-style: none;
+	background: #000;
+	font-size: 0.8em;
+}
+
+ul#navbar li
+{
+	display: inline;
+}
+
+ul#navbar li.right
+{
+	float: right;
+}
+
+
+ul#navbar li a
+{
+	display: inline-block;
+	padding: 10px;
+	color: #ddd;
+	text-decoration: none;
+}
+
+ul#navbar li a:hover,
+ul#navbar li a:active
+{
+	background: #333;
+	color: #fff;
+}
+
+ul#navbar li a.active
+{
+	color: #fff;
+}
+
+ul#navbar li a img
+{
+	vertical-align: top;
+	margin-right: 5px;
+	width: 15px;
+}
+
+/* }}} */
+
+#content
+{
+	padding: 12px;
+	background: #f5f5eb;
+	line-height: 1.5em;
+}
+
+h2
+{
+	margin: 12px 0;
+	font-size: 1.6em;
+	font-weight: bold;
+}
+
+#content h2:empty
+{
+	display: none;
+}
+
+h3
+{
+	margin: 12px 0;
+	font-size: 1.4em;
+	font-weight: normal;
+}
+
+#content a
+{
+	color: #3c5b6f;
+	text-decoration: none;
+}
+
+#content a:hover,
+#content a:active
+{
+	text-decoration: underline;
+}
+
+/* Right sidebar {{{ */
+
+#sidebar-right
+{
+	float: right;
+	width: 250px;
+	font-size: 0.8em;
+	line-height: 1.2em;
+}
+
+#sidebar-right h3
+{
+	margin: 12px 0;
+	padding: 0;
+	font-size: 1.2em;
+}
+
+#sidebar-right ul
+{
+	margin: 0;
+}
+
+#sidebar-right ul li
+{
+	margin-bottom: 6px;
+}
+
+/* }}} */
+
+/* Primary content block {{{ */
+
+#primary-content
+{
+	float: left;
+	width: 780px;
+}
+
+p.leadin
+{
+	font-size: 1.1em;
+}
+
+.event
+{
+	margin: 12px 0;
+	padding: 12px 0;
+}
+
+.event h4
+{
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.event dl
+{
+	margin: 0;
+	padding: 0;
+}
+
+.event dt
+{
+	float: left;
+	width: 140px;
+	font-weight: normal;
+}
+
+.event dd
+{
+	float: left;
+}
+
+.event dt,
+.event .description
+{
+	clear: both;
+}
+
+dl.officers-list dt
+{
+	font-weight: bold;
+}
+
+.captioned-image
+{
+	margin: 6px;
+	padding: 6px;
+	background: #fff;
+	border: 1px solid #dbd8bc;
+}
+
+.captioned-image p
+{
+	margin: 0;
+	font-size: 0.8em;
+}
+
+iframe#calendar_frame
+{
+    width: 100%;
+    height: 500px;
+    border: 1px solid #dbd8bc;
+    background: #fff;
+    padding: 1px;
+}
+
+table.irc_stats
+{
+    width: 100%;
+    border: 1px solid #dbd8bc;
+    border-spacing: 1px;
+    font-size: 0.9em;
+}
+
+table.irc_stats th,
+table.irc_stats td
+{
+    padding: 1px;
+}
+
+table.irc_stats th
+{
+    background: #dbd8bc;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+table.irc_stats tr:nth-child(odd)
+{
+    background: #edeada;
+}
+
+table.irc_stats td
+{
+    padding-right: 6px;
+}
+
+/* }}} */
+
+.clear
+{
+	clear: both;
+}
+
+/* Footer {{{ */
+
+#footer
+{
+	padding: 24px;
+        overflow: auto;
+	background: #333;
+	font-size: 0.8em;
+}
+
+#footer,
+#footer a
+{
+	color: #ddd;
+}
+
+/* }}} */
+
+/* Praetorians {{{ */
+#gatekeeper
+{
+    position: relative;
+    margin-top: -64px;
+    padding: 0px;
+    height: 64px;
+    clear: both;
+}
+#gatekeeper a
+{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    color: black;
+}
