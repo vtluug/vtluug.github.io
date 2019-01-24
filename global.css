@@ -1,349 +1,203 @@
-
-
-
-
-
-/*
-     FILE ARCHIVED ON 12:32:38 Jul 2, 2016 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 1:26:51 Jan 4, 2017.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-html
-{
-        height: 100%;
-}
-body
-{
-	margin: 0px;
-        padding: 0px;
-	background: #dbd8bc;
-	font-family: "DejaVu Sans", 'Bitstream Vera Sans', sans-serif;
-	font-size: 100%;
-        height: 100%;
-        width: 100%
+* {
+  box-sizing: border-box;
 }
 
-#stickwrapper
-{
-        min-height: 100%;
+@font-face {
+    font-family: 'Titillium Web';
+    src: url(./TitilliumWeb-Light.ttf) format('truetype'),
+         url(./TitilliumWeb-LightItalic.ttf) format('truetype');
 }
 
-#wrapper
-{
-	width: 1100px;
-        padding-top: 24px;
-	margin: 0 auto 0 auto;
+html,body { height:100%; }
+
+body {
+  margin: 0px;
+  font-family: 'noto sans';
+  background-color: #eee
 }
 
-/* Header {{{ */
-
-#header h1
-{
-	height: 200px;
-	margin: 0;
-	background: url(/logo.png) #5c0000 no-repeat;
-	color: #fff;
-	font-family: "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Lucida Console", monospace;
-	font-size: 2.0em;
-	font-weight: normal;
-	line-height: 1.2em;
+a {
+  color: #f7901e;
 }
 
-#header h1 a
-{
-	display: block;
-	padding: 55px 500px 0 40px;
-	height: 100%;
-	color: #fff;
-	text-decoration: none;
+.body-container {
+  position: relative;
+  margin: 0 auto;
+  max-width: 100em;
+  min-height: 100%;
+  background-color: #fff
 }
 
-#header h1 a:link,
-#header h1 a:visited
-{
-	text-shadow: #990000 0 0 20px;
+.nav {
+  height: 50px;
+  width: 100%;
+  background-color: #841c44;
+  position: relative;
 }
 
-#header h1 a:hover,
-#header h1 a:active
-{
-	text-shadow: #fff 0 0 20px;
+.nav > .nav-header {
+  margin-left: 3%;
+  display: inline;
 }
 
-/* }}} */
-
-/* Navbar {{{ */
-
-ul#navbar
-{
-	margin: 0;
-	padding: 0px 12px;
-	list-style: none;
-	background: #000;
-	font-size: 0.8em;
+.nav > .nav-header > .nav-title {
+  display: inline-block;
+  font-size: 24px;
+  color: #fff;
+  padding: 6px 10px 10px 10px;
+  font-family: 'Titillium Web', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  text-decoration: none;
 }
 
-ul#navbar li
-{
-	display: inline;
+.nav-title > a {
+  color: #fff;
+  text-decoration: none;
+  border: 0;
 }
 
-ul#navbar li.right
-{
-	float: right;
+.nav > .nav-btn {
+  display: none;
 }
 
-
-ul#navbar li a
-{
-	display: inline-block;
-	padding: 10px;
-	color: #ddd;
-	text-decoration: none;
+.nav > .nav-links {
+  margin-right: 3%;
+  display: inline;
+  float: right;
+  font-size: 18px;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
 }
 
-ul#navbar li a:hover,
-ul#navbar li a:active
-{
-	background: #333;
-	color: #fff;
+.nav > .nav-links > a {
+  display: inline-block;
+  padding: 11px 10px 7px 10px;
+  text-decoration: none;
+  color: #ffffff;
 }
 
-ul#navbar li a.active
-{
-	color: #fff;
+.nav > .nav-links > a:hover {
+  border-bottom: 4px solid #f7901e
 }
 
-ul#navbar li a img
-{
-	vertical-align: top;
-	margin-right: 5px;
-	width: 15px;
+.nav > #nav-check {
+  display: none;
 }
 
-/* }}} */
-
-#content
-{
-	padding: 12px;
-	background: #f5f5eb;
-	line-height: 1.5em;
+.container {
+  display: grid;
+  grid-template-columns: 25vw auto;
+  grid-template-rows: auto;
+  padding-bottom: 3em;
 }
 
-h2
-{
-	margin: 12px 0;
-	font-size: 1.6em;
-	font-weight: bold;
+.container > a {
+  color: #f7901e;
 }
 
-#content h2:empty
-{
-	display: none;
+.header {
+  grid-column: span 2;
 }
 
-h3
-{
-	margin: 12px 0;
-	font-size: 1.4em;
-	font-weight: normal;
+.content {
+  position: relative;
+  right: 0;
+  flex: 1;
+  padding: 3vw;
 }
 
-#content a
-{
-	color: #3c5b6f;
-	text-decoration: none;
+.singlecolumncontent {
+  margin: 0 auto;
+  padding: 10%;
+  text-align: center;
+  max-width: 50em;
 }
 
-#content a:hover,
-#content a:active
-{
-	text-decoration: underline;
+.leftbar {
+  padding: 3vw;
+  text-align: center;
+  max-width: 40em;
 }
 
-/* Right sidebar {{{ */
-
-#sidebar-right
-{
-	float: right;
-	width: 250px;
-	font-size: 0.8em;
-	line-height: 1.2em;
+.footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 1em;
+  text-align: center;
+  font-size: 1em;
+  background-color: #6d6a75;
+  color: white;
 }
 
-#sidebar-right h3
-{
-	margin: 12px 0;
-	padding: 0;
-	font-size: 1.2em;
+.footer > a {
+  color: #f7b04e
 }
 
-#sidebar-right ul
-{
-	margin: 0;
-}
+@media (max-width:930px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-#sidebar-right ul li
-{
-	margin-bottom: 6px;
-}
-
-/* }}} */
-
-/* Primary content block {{{ */
-
-#primary-content
-{
-	float: left;
-	width: 780px;
-}
-
-p.leadin
-{
-	font-size: 1.1em;
-}
-
-.event
-{
-	margin: 12px 0;
-	padding: 12px 0;
-}
-
-.event h4
-{
-	margin: 0;
-	padding: 0;
-	font-size: 1em;
-	font-weight: bold;
-}
-
-.event dl
-{
-	margin: 0;
-	padding: 0;
-}
-
-.event dt
-{
-	float: left;
-	width: 140px;
-	font-weight: normal;
-}
-
-.event dd
-{
-	float: left;
-}
-
-.event dt,
-.event .description
-{
-	clear: both;
-}
-
-dl.officers-list dt
-{
-	font-weight: bold;
-}
-
-.captioned-image
-{
-	margin: 6px;
-	padding: 6px;
-	background: #fff;
-	border: 1px solid #dbd8bc;
-}
-
-.captioned-image p
-{
-	margin: 0;
-	font-size: 0.8em;
-}
-
-iframe#calendar_frame
-{
-    width: 100%;
-    height: 500px;
-    border: 1px solid #dbd8bc;
-    background: #fff;
-    padding: 1px;
-}
-
-table.irc_stats
-{
-    width: 100%;
-    border: 1px solid #dbd8bc;
-    border-spacing: 1px;
-    font-size: 0.9em;
-}
-
-table.irc_stats th,
-table.irc_stats td
-{
-    padding: 1px;
-}
-
-table.irc_stats th
-{
-    background: #dbd8bc;
-    font-weight: bold;
-    font-size: 0.8em;
-}
-
-table.irc_stats tr:nth-child(odd)
-{
-    background: #edeada;
-}
-
-table.irc_stats td
-{
-    padding-right: 6px;
-}
-
-/* }}} */
-
-.clear
-{
-	clear: both;
-}
-
-/* Footer {{{ */
-
-#footer
-{
-	padding: 24px;
-        overflow: auto;
-	background: #333;
-	font-size: 0.8em;
-}
-
-#footer,
-#footer a
-{
-	color: #ddd;
-}
-
-/* }}} */
-
-/* Praetorians {{{ */
-#gatekeeper
-{
-    position: relative;
-    margin-top: -64px;
-    padding: 0px;
-    height: 64px;
-    clear: both;
-}
-#gatekeeper a
-{
+  .nav > .nav-btn {
+    display: inline-block;
     position: absolute;
-    bottom: 0px;
     right: 0px;
-    margin: 0px;
-    padding: 0px;
-    text-decoration: none;
-    color: black;
+    top: 0px;
+  }
+  .nav > .nav-btn > label {
+    display: inline-block;
+    width: 65px;
+    height: 50px;
+    padding: 13px;
+  }
+  .nav > .nav-btn > label:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .nav > .nav-links > a:hover {
+    border-bottom: 0px solid #f7901e
+  }
+  .nav > .nav-btn > label > span {
+    display: block;
+    width: 25px;
+    height: 10px;
+    border-top: 2px solid #eee;
+  }
+  .nav > .nav-links {
+    margin-right: 0%;
+    position: absolute;
+    display: block;
+    width: 40%;
+    background-color: #333;
+    height: 0px;
+    transition: all 0.15s ease-in;
+    overflow-y: hidden;
+    top: 50px;
+    right: 0px;
+  }
+  .nav > .nav-links > a {
+    display: block;
+    float: right;
+    text-align: right;
+    right: 0px;
+    width: 40vw;
+    height: 2.5em;
+  }
+  .nav > #nav-check:not(:checked) + .nav-links {
+    height: 0px;
+  }
+  .nav > #nav-check:checked + .nav-links {
+    height: calc(100vh - 50px);
+    width: 40vw;
+    overflow-y: auto;
+  }
+
+  .nav > #nav-check:checked {
+    position: fixed;
+  }
 }

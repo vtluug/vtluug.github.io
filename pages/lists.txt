@@ -1,0 +1,18 @@
+<p>The Linux and Unix Users Group at Virginia Tech has an announcement list,
+<code>vtluug-announce</code>, and a discussion list, <code>vtluug</code>. The
+announcement list is a low-traffic list primarily used for event announcements,
+and the discussion list is a moderate-traffic open forum, with regular traffic
+including questions, suggestions, and job postings.</p>
+
+<p>We encourage interested parties to subscribe to just the announcement list
+or to both lists as event announcements are not cross-posted to the discussion
+list unless someone starts a thread. Meetings are typically posted on the
+Announcement list.</p>
+
+<ul>
+  <li><a href="https://groups.google.com/a/vt.edu/forum/#!forum/vtluug-announce-g">VTLUUG announcements list</a></li>
+  <li><a href="https://groups.google.com/a/vt.edu/forum/#!forum/vtluug-g">VTLUUG discussion list</a></li>
+</ul>
+
+<p>You can add yourself to either of these lists by clicking the relevant link
+and then clicking the "Join group" button.</p>
