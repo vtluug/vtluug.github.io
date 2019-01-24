@@ -192,9 +192,10 @@ a {
     height: 0px;
   }
   .nav > #nav-check:checked + .nav-links {
-    height: calc(100vh - 50px);
-    width: 40vw;
-    overflow-y: auto;
+    height: auto;
+    width: auto*2;
+    overflow-y: visible;
+    position:
   }
 
   .nav > #nav-check:checked {
