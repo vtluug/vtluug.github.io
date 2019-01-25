@@ -5,9 +5,12 @@
 @font-face {
     font-family: 'Titillium Web';
     src: url(./TitilliumWeb-Light.ttf) format('truetype'),
-         url(./TitilliumWeb-LightItalic.ttf) format('truetype'),
-         url(./NotoSans-Regular.ttf) format('truetype');
+         url(./TitilliumWeb-LightItalic.ttf) format('truetype');
+}
 
+@font-face {
+    font-family: 'noto sans';
+    src: url(./NotoSans-Regular.ttf) format('truetype');
 }
 
 html,body { height:100%; }
