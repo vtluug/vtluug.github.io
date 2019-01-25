@@ -1,3 +1,4 @@
+<h2>Mailing Lists</h2>
 <p>The Linux and Unix Users Group at Virginia Tech has an announcement list,
 <code>vtluug-announce</code>, and a discussion list, <code>vtluug</code>. The
 announcement list is a low-traffic list primarily used for event announcements,

@@ -1,3 +1,4 @@
+<h2>Services</h2>
 <p>VTLUUG runs a number of services to support the Virginia Tech community. Since we don't charge dues,
 our hardware is funded entirely through any student organization funding we can get, so we are significantly
 limited in the services we can provide.  However, we accept server and hard drive donations through

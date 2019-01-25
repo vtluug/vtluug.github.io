@@ -1,3 +1,4 @@
+<h2>IRC</h2>
 <p>Internet Relay Chat is a tried-and-true broadcast messaging protocol favored
 by free and open source software projects. The Linux and Unix Users Group at
 Virginia Tech has a relatively active channel, <code>#vtluug</code>, on <a
