@@ -1,5 +1,5 @@
 <p><h2>Welcome!</h2> <br>
-Meetings for Spring 2019 semester will be held on Thursdays in McBryde 204.
+Meetings for Spring 2019 semester will be held on Thursdays in McBryde 204
 from 7:15pm to around 8:30pm.<br> <br>
 You can see more detail about each meeting on our <a href="./calendar.html">calendar</a>.<br>
 Information about each meeting also goes out on the announcement <a href="./lists.html">mailing list</a>.<br>
