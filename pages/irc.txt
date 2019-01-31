@@ -7,3 +7,7 @@ href="http://oftc.net/">OFTC</a>.</p>
 <Li><a href="https://webchat.oftc.net/?channels=vtluug" rel='external'>Web access</a></li>
 <li><a href="ircs://irc.oftc.net:6697/vtluug">Link for native clients</a> (like <a href="/web/20160518144802/http://xchat.org/">XChat</a>)</li>
 </ul>
+<p>Note: In order to reduce spam, we require all IRC users to have their nicks registered with ChanServ to be able to speak. You can register your chosen nick with</p>
+/msg nickserv register YourPassword your@email.address.com
+<p>and then you must identify on every login with</p>
+/msg nickserv identify YourPassword
