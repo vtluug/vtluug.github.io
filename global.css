@@ -150,14 +150,23 @@ a {
   }
 
   .content {
-    padding-bottom: 3em;
+    padding: 3vw;
+  }
+
+  .container {
+    padding-bottom: 0em;
   }
 
   .leftbar {
     background-color: #eee;
     padding-top: 3em;
+    padding-bottom: 3em;
     max-width: 100vw;
 
+  }
+
+  .footer {
+    position: relative;
   }
 
   .nav > .nav-btn {
