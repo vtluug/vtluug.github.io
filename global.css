@@ -169,6 +169,10 @@ a {
     position: relative;
   }
 
+  .nav {
+    z-index: 99;
+  }
+
   .nav > .nav-btn {
     display: inline-block;
     position: absolute;
