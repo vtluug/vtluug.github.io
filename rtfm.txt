@@ -31,15 +31,16 @@ NFS Configuration:
     - 755     root:root         /nfs/keg
     - 775     nobody:luugusers  /nfs/keg/share      10.98.0.8:/keg/nfs/share
 - Libvirt hosts only (meltdown, spectre):
-    - 755 root:root     /nfs/cistern/libvirt
-    - 755 root:root     /nfs/cistern/libvirt/images 10.98.0.7:/cistern/nfs/libvirt/images
-    - 755 root:root     /nfs/cistern/libvirt/images/meltdown (meltdown ONLY)
-    - 755 root:root     /nfs/cistern/libvirt/images/spectre  (spectre ONLY)
-    - 755 root:root     /nfs/cistern/libvirt/isos   10.98.0.7:/cistern/nfs/libvirt/isos
-- Sczi only:
-    - 755 root:root /nfs/cistern/srv            10.98.0.7:/cistern/nfs/srv
-    - 755 root:root /nfs/cistern/docker
-    - 755 root:root /nfs/cistern/docker/data    10.98.0.7:/cistern/nfs/docker/data
+    - 755     root:root         /nfs/cistern/libvirt        10.98.0.7:/cistern/nfs/libvirt
+    - 755     root:root         /nfs/cistern/libvirt/images
+    - 755     root:root         /nfs/cistern/libvirt/images/meltdown (For meltdown vms)
+    - 755     root:root         /nfs/cistern/libvirt/images/spectre  (For spectre vms)
+    - 755     root:root         /nfs/cistern/libvirt/isos
+- Docker Hosts only:
+    - 770     root:root         /nfs/cistern/docker
+    - 755     root:root         /nfs/cistern/docker/data    10.98.0.7:/cistern/nfs/docker/data
+- Sczi Hosts only:
+    - 755     root:root         /nfs/cistern/srv            10.98.0.7:/cistern/nfs/srv
 - ZFS:
 - All of the paths listed above should be ZFS filesystems on their respective hosts uexcept the images and isos directory within libvirt, which should be manually created
 
@@ -51,9 +52,17 @@ Installation (Baremetal)
 All hosts
 - Create the papatux user with the password in the vtluug-admin repo
     - This is used as a general admin account
-- If > 1 drives are available, use 2 boot drives in raid
+- Aside from meltdown and spectre, use 2 boot drives in raid if possible
 - Open ssh port 2222 (and 22) since this is externally blocked unless the IPs have exemptions.
 - Ensure ssh is enabled and python is installed
+- Ensure /etc/hostname contains the host's fqdn
+
+Meltdown & Spectre
+- Install using LVM:
+    - Name the Volume Group 'meltdown-vg'.
+    - Create a 50G root Logical Volume called 'root-lv'.
+    - Create a Logical Volume taking up 90% of free space called 'docker-lv'. This is for setting size limits on containers.
+    - Format 'docker-lv' as xfs. Ansible will take care of mounting it.
 
 Router
 - Disable root password login over ssh.
@@ -102,7 +111,7 @@ Libvirt hosts (Ubuntu via netplan)
     - Change $INTERFACE to the interface being bridged
     - Change $MAC to the mac address specified in $SCRIPTS/router/lan/local_hosts
     - Run 'netplan apply'
-    - Update dnsmasq on joey with the correct MAC address & apply changes
+    - Update dnsmasq on joey with the correct MAC address & apply changes (Only if new host is added w/o any records in dnsmasq)
     - Restart networking on the libvirt hosts
 
 
@@ -120,9 +129,9 @@ NFS
 
 To build each zfs pool, first look up the device ids in /dev/disk/by-id since these are guaranteed to not change (unlike /dev/sdX)
 - Install 'zfsutils-linux'. If the following commands produce errors reboot first.
-- Cyberdelia - 7 1TB drives in a raidz3 zfs pool named 'tank'
+- Cyberdelia - 7 1TB drives in a raidz2 zfs pool named 'tank'
     - Similarly, run 'zpool create -f -o ashift=12 keg raidz2 <disk_1_id> <disk_2_id> ... <disk_7_id>
-- Dirtycow - 8 2TB drives in a raidz3 pool named 'cistern'
+- Dirtycow - 8 2TB drives in a raidz2 pool named 'cistern'
     - Similarly, run 'zpool create -f -o ashift=12 cistern raidz2 <disk_1_id> <disk_2_id> ... <disk_8_id>
 - Shellshock - 3 500GB drives in a raidz2 zfs pool named 'cistern'
     - Run 'zpool create -f -o ashift=12 keg raidz1 <disk_1_id> <disk_2_id> <disk_3_id>
@@ -132,53 +141,60 @@ To build each zfs pool, first look up the device ids in /dev/disk/by-id since th
 Baremetal Hosts
 ---------------
 - Make sure you've copied your ssh key to all the baremetal servers so ansible works
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=<host>.vtluug.org --skip-tags proper_perms_dirs' for each host in nfs
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=<host>.vtluug.org --skip-tags needs_freeipa' for each host in nfs
     - NFS needs to work first before we can do anything and freeipa needs to work before proper permissions can be set
     - You could do the nfs instead of each host individually, but doing 1 host a time makes things easier to debug
 - Create a homedir for papatux on nfs with the correct umask settings since it won't be a user in freeipa
-- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=<host>.vtluug.org --skip-tags proper_perms_dirs' for each host in baremetal and not in nfs group
+- Run 'ansible-playbook main.yml -i hosts.cfg -K -u papatux --limit=<host>.vtluug.org --skip-tags needs_freeipa' for each host in baremetal and not in nfs group
     - You could do the nfs instead of each host individually, but doing 1 host a time makes things easier to debug
 
 
 Create the VMs
 --------------
-- Run 'ansible-playbook deploy.yml -i hosts.cfg -u papatux -k -K'
+- Run 'ansible-playbook deploy.yml -i hosts.cfg -u papatux -k -K -@/path/to/accounts/file''
 
-Go into to one of the VMs and get the primary interface, then put that in ANSIBLE/hosts.cfg
 
 - Configuring FreeIPA Server
+    - Copy 'SCRIPTS/freeipa/ipa-config/ifcfg-eth0:0' to '/etc/sysconfig/network-scripts/eth0:0'.
     - The configuration is not automated because it is only done once, and you should be aware of how it's configured
     - Install packages freeipa-server, ipa-server-dns, and rng-tools
-    - In /etc/hosts, add chimera's v6 address, fqdn, and hostname to the bottom
+    - In /etc/hosts, add chimera's v4 & v6 address, fqdn, and hostname to the bottom (on 2 separate lines)
     - In /etc/NetworkManager/NetworkManager.conf, add 'dns=none' under [main]
+    - Reboot
     - In /etc/resolv.conf, replace the content with a v4 & v6 address (preferably VTs)
-    - Reboot chimera (some pkgs need a reboot)
+    - Reboot again
     - Run 'ipa-server-install' (as root)
     - Use these options:
         - Do you want to configure integrated DNS (BIND)? [no]: yes
         - Server host name: chimera.vtluug.org
         - Domain name: krb.vtluug.org
         - Realm name: KRB.VTLUUG.ORG
-        - Directory Manager PW: see accounts file in gitolite-admin
-        - admin PW: See accounts file in gitolite-admin
+        - Directory Manager PW: See accounts file in gitolite-admin
+        - Admin PW: See accounts file in gitolite-admin
         - Configure DNS forwarders: yes
         - Search for missing reverse zones: yes
+        - (Press Enter until you get to the next step)
         - Continue to configure system with these values: yes
     - Run 'kinit admin' to authenticate as admin
-    - Create 'vtluug-users' and 'officers' groups and change the default shell
+    - Create groups, set shell/home/email, and disable private groups
         - 'ipa group-add luugusers --desc "VTLUUG Members"'
         - 'ipa group-add officers --desc "VTLUUG Officers"'
         - 'ipa config-mod --defaultgroup luugusers'
         - 'ipa config-mod --defaultshell=/bin/bash'
+        - 'ipa config-mod --homedirectory=/nfs/cistern/home'
+        - 'ipa config-mod --emaildomain=vtluug.org'
+        - 'ipa-managed-entries -e "UPG Definition" -p $DIRECTORY_MANAGER_PW disable'
+    - Reboot one last time
+    - Do NOT try to use letsencrypt. FreeIPA can be very fragile sometimes so just don't do it.
+    - Run 'ansible-playbook main.yml -i hosts.cfg -u papatux -k -K --limit chimera.vtluug.org' to configure the rest of the system
 
 
-Configure baremetal for freeipa login & correct folder permissions
-------------------------------------------------------------------
-    - Run 'ipa-client-install -U --domain=krb.vtluug.org --server=chimera.vtluug.org --principal=admin --password=$FREEIPA_ADMIN_PASSWORD'
-    - Remove that command from history
-    - For NFS hosts, set the proper permissions for nfs folders in the 'NFS Configuration' now that freeipa is working
-    - Run the ansible scripts from 2 sections ago, but with '--tags' instead of '--skip-tags'
-    - Run 'mount -a' on nfs hosts to mount dirs with correct permissions
+Configure baremetal hosts for freeipa login & correct folder permissions
+------------------------------------------------------------------------
+- Run 'ipa-client-install --domain=krb.vtluug.org --server=chimera.vtluug.org --principal=admin'
+- For NFS hosts, set the proper permissions for nfs folders in the 'NFS Configuration' now that freeipa is working
+- Run the ansible scripts from 2 sections ago, but with '--tags' instead of '--skip-tags'
+- Run 'mount -a' on nfs hosts to mount dirs with correct permissions
 
 
 Configure the new VMs (mostly)
@@ -187,9 +203,9 @@ Configure the new VMs (mostly)
     - This mostly configures all the new hosts
 
 
-Szci Specific Config (Docker Services)
+Docker Services Config
 --------------------------------------
-- Ansible should've pulled https://github.com/vtluug/apps.git into /nfs/cistern/docker/apps
-- Follow directions on the README for each of the services
+- Ansible should've pulled https://github.com/vtluug/apps.git into /nfs/cistern/docker/apps on meltdown, spectre, & sczi (+ any other docker hosts)
+- Follow directions in the README for each of the services
 
 Acidburn specific config ???
