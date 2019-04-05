@@ -36,6 +36,7 @@ NFS Configuration:
     - 755     root:root         /nfs/cistern/libvirt/images/meltdown (For meltdown vms)
     - 755     root:root         /nfs/cistern/libvirt/images/spectre  (For spectre vms)
     - 755     root:root         /nfs/cistern/libvirt/isos
+    - 775     root:root         /var/lib/docker     /dev/$hostname-vg/docker-lv # For restricting docker container sizes
 - Docker Hosts only:
     - 770     root:root         /nfs/cistern/docker
     - 755     root:root         /nfs/cistern/docker/data    10.98.0.7:/cistern/nfs/docker/data
