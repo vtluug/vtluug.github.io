@@ -18,13 +18,13 @@ accounts</a></li>
 rel='external'>Gobblerpedia</a></li>
 <li>A wiki for technical information about Virginia Tech and our own work</li>
 <li><a href='https://hokieprivacy.org' rel='external'>Hokie Privacy</a>, an outreach project documenting surveillance on-campus</li>
+<li>User web hosting</li>
 </ul>
 
 <h3>Planned services</h3>
 Services we plan to expand or begin to provide in the near future include:
 <ul>
 <li>An expanded <a href='http://tahoe-lafs.org/' rel='external'>Tahoe-LAFS</a> grid</li>
-<li>User web hosting</li>
 <li>A mirror with more distributions</li>
 <li>Diaspora* Pod</li>
 </ul>
