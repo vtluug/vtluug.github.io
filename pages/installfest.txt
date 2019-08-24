@@ -1,9 +1,8 @@
 <h2>Installfest</h2>
-Installfest is held at the beginning of every semester, and the time and location for <strong>Spring 2019</strong> are as follows:<br>
+Installfest is held at the beginning of every semester, and the time and location for <strong>Fall 2019</strong> are as follows:<br>
 
-<h3>Sunday Feb 3rd, 2019<br>
-  12:00 PM - 5:00 PM <br>
-  McBryde 455 </h3>
+<h3>Saturday Sep 7th, 2019<br>
+  Time and location TBD</h3>
 
 Required to use Linux for a class?<br>
 Curious about one of the few Microsoft Windows alternatives out there?<br>
