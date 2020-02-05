@@ -1,6 +1,10 @@
 <h2>Calendar</h2>
+<!--
 iCal link: <a>https://calendar.google.com/calendar/ical/vtluug%40gmail.com/public/basic.ics</a> <br>
 Note: We try to keep the calendar updated, but the primary source of truth for VTLUUG events is the <a href=./lists.html>mailing list</a>.
 <br>
 <br>
 <iframe src="https://calendar.google.com/calendar/embed?src=vtluug%40gmail.com&ctz=America%2FNew_York" style="border: 0" frameborder="0" height=500 width=100% scrolling="no"></iframe>
+-->
+The primary source of truth for VTLUUG events is the <a href=./lists.html>mailing list</a>.
+
