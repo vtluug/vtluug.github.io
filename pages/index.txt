@@ -1,7 +1,7 @@
 <p><h2>Welcome!</h2> <br>
-Meetings for the Spring 2020 semester will be held on
-Tuesday afternoons,
-from 6:30 PM to around 8:00 PM in Torg 1060.<br> <br>
+Meetings for the Fall 2020 semester will be held on
+Tuesday evenings,
+from 7:30 PM PM to around 9:00 PM via Zoom.<br> <br>
 
 You can see more detail about each meeting on our <a href="./calendar.html">calendar</a>.<br>
 Information about each meeting also goes out on the announcement <a href="./lists.html">mailing list</a>.<br>
@@ -19,4 +19,5 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 				<p>	
 					Contact <a href="mailto:rgniadek@vt.edu">rgniadek@vt.edu</a> for more information. 
 				</p>
+				<li> 9/8 at 7 PM EST - Kickoff Meeting and Linux Basics by Joshua Detwiler</li>
 
