@@ -19,4 +19,4 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 				<p>	
 					Contact <a href="mailto:rgniadek@vt.edu">rgniadek@vt.edu</a> for more information. 
 				</p>
-				<li> 1/21 at 7:30 PM EST - Spring 2021 Kickoff Meeting</li>
+				<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS0iMS1l6M4dxFQ2cJ5czBzPpFWXClkIzloZuZ4jCd2IYpsbFo0L6IkBwvEABxNTXWN7YBtqxoJaHsS/pubhtml?widget=true&amp;headers=false"></iframe>
