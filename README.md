@@ -7,4 +7,7 @@ can be found there, but in general the files you should edit are the global css 
 template.html, and the various pages found in the pages folder.
 
 ## Old site
-The old site is stored in the old/ folder.
+The old site is stored in the old/ folder
+
+
+Ryan was here.
