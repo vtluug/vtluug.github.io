@@ -10,4 +10,4 @@ template.html, and the various pages found in the pages folder.
 The old site is stored in the old/ folder
 
 
-Ryan was here.
+Ryan was here and then he left.
