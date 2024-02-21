@@ -1,5 +1,5 @@
 <p><h2>Welcome!</h2> <br>
-Welcome back to Blacksburg for the Fall 2023 Semester!<br> <br>
+Welcome back to Blacksburg for the Spring 2024 Semester!<br> <br>
 
 You can see more detail about each meeting on our <a href="./calendar.html">calendar</a>.<br>
 Information about each meeting also goes out on the announcement <a href="./lists.html">mailing list</a>.<br>
@@ -15,7 +15,7 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 					Spring 2024 Installfest TBA
 				</p>
 
-<h3>Fall 2023 Meetings</h3>
+<h3>Spring 2024 Meetings</h3>
 				<p>
 					Spring 2024 Meetings will be every Wednesday in McBryde 316 at 6:00 PM.
 				</p>
