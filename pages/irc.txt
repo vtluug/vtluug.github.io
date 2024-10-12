@@ -7,10 +7,5 @@ href="http://oftc.net/">OFTC</a>.</p>
 <Li><a href="https://webchat.oftc.net/?channels=vtluug" rel='external'>Web access</a></li>
 <li><a href="ircs://irc.oftc.net:6697/vtluug">Link for native clients</a> (like <a href="/web/20160518144802/http://xchat.org/">XChat</a>)</li>
 </ul>
-<p>Note: Due to spam, only users registered with NickServ can join the channel. You can register your chosen nick with</p>
-<code>/msg nickserv register YourPassword your@email.address.com</code>
-<p>and then you must identify on every login with</p>
-<code>/msg nickserv identify YourPassword</code>
-<br>
 <br>
 We also have a full tutorial for setting up weechat, a common IRC client, on our <a href="https://vtluug.org/wiki/WeeChat">wiki</a>.
