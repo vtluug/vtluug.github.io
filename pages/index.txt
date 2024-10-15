@@ -1,10 +1,12 @@
 <p><h2>Welcome!</h2> <br>
 Welcome back to Blacksburg for the Fall 2024 Semester!<br> <br>
 
+<a href="/irc.html">We now have a Matrix space!</a><br> <br>
+
 You can see more detail about each meeting on our <a href="./calendar.html">calendar</a>.<br>
 Information about each meeting also goes out on the announcement <a href="./lists.html">mailing list</a>.<br>
 If you have any questions about Linux, Unix, Open Source Software, or our club, you can read our
-<a href="./about.html">about</a> page or join our channel on <a href="./irc.html">IRC</a>.
+<a href="./about.html">about</a> page or join our <a href="./irc.html">chatroom</a>.
 </p>
 <br>
 
