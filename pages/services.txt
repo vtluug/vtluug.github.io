@@ -13,6 +13,7 @@ Cool new stuff:
 
 Long-term and infrastructure-critical services:
 <ul>
+<li>Free VPS instances for members, with publically-accessible IPv4 addresses.</li>
 <li>Debian <a href='https://vtluug.org/wiki/Infrastructure:Acidburn'>shell
 accounts</a>, complete with @vtluug.org email and web hosting!</li>
 <li>Functional IPA/LDAP for vtluug services</li>
