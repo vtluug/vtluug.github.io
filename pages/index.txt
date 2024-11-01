@@ -1,7 +1,7 @@
 <p><h2>Welcome!</h2> <br>
 Welcome back to Blacksburg for the Fall 2024 Semester!<br> <br>
 
-<a href="/irc.html">We now have a Matrix space!</a><br> <br>
+<a href="/irc.html">If you're new and looking to get involved, please join our IRC/Matrix chatroom!</a><br> <br>
 
 You can see more detail about each meeting on our <a href="./calendar.html">calendar</a>.<br>
 Information about each meeting also goes out on the announcement <a href="./lists.html">mailing list</a>.<br>
