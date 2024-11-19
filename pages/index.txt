@@ -23,5 +23,5 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 				</p>
                     <iframe src="/files/vtluug-calendar.html" class="schedule-embed"></iframe>
 				<p>	
-					Contact <a href="mailto:miloc@vt.edu">miloc@vt.edu</a> for more information. 
+					Contact <a href="mailto:rishik@vt.edu">rishik@vt.edu</a> for more information. 
 				</p>
