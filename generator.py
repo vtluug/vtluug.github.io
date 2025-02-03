@@ -12,6 +12,9 @@ template = open("template.html","r")
 lines = template.readlines()
 template.close()
 
+consts = {"currentSem": "Spring 2025",
+          "currentSemShort": "Spring '25",
+          "currentSchoolYear": "2024-25"}
 for root, dirs, files in os.walk("./pages"):
     for file in files:
         if file.endswith(".txt"):
@@ -24,7 +27,28 @@ for root, dirs, files in os.walk("./pages"):
                     replacmentString = ""
                     contentFile = open("./pages/"+file, "r")
                     for s in contentFile.readlines():
-                        replacmentString += s
+                        i = 0
+                        news = ""
+                        while i < len(s):
+                            if i < len(s)-2 and s[i:i+3] == "\\${":
+                                news += "${"
+                                i += 3
+                            if s[i] == "$" and i < len(s)-1 and s[i+1] == "{":
+                                key = ""
+                                i += 2
+                                while i < len(s) and s[i] != "}":
+                                    key += s[i]
+                                    i += 1
+                                if i >= len(s) and s[i] != "}":
+                                    raise IndexError("Expected '}' before end of line")
+                                if key not in consts:
+                                    raise KeyError("Invalid key '%s'" % key)
+                                news += consts[key]
+                            else:
+                                news += s[i]
+                            i += 1
+                        news.replace("\$", "$")
+                        replacmentString += news
                     createdFile.write(line.replace("<!--*content-->", replacmentString))
                     contentFile.close()
             createdFile.close()
