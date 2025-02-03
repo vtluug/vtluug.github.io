@@ -47,7 +47,6 @@ for root, dirs, files in os.walk("./pages"):
                             else:
                                 news += s[i]
                             i += 1
-                        news.replace("\$", "$")
                         replacmentString += news
                     createdFile.write(line.replace("<!--*content-->", replacmentString))
                     contentFile.close()
