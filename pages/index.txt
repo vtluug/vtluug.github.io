@@ -19,7 +19,7 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 
 <h3>Spring 2025 Meetings</h3>
 				<p>
-					${currentSem} Meetings will be every Wednesday in McBryde 240 at 7:00 PM, starting on January 22rd.
+					${currentSem} Meetings will be every Wednesday in McBryde 240 (unless otherwise specified) at 7:00 PM, starting on January 22rd.
 				</p>
                     <iframe src="/files/vtluug-calendar.html" class="schedule-embed"></iframe>
 				<p>	
