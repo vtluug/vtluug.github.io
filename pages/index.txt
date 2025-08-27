@@ -17,7 +17,7 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 					The ${currentSemShort} installfest is planned for the first week of February, precise date to be determined and added to the calendar below. If you're interested in attending or planning, come to a club meeting or <a href="./irc.html">join our chat!</a>
 				</p>
 
-<h3>Spring 2025 Meetings</h3>
+<h3>${currentSem} Meetings</h3>
 				<p>
 					${currentSem} Meetings will be every Wednesday in McBryde 224 (unless otherwise specified) at 7:00 PM, starting on January 22rd.
 				</p>
