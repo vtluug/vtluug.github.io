@@ -1,5 +1,5 @@
 <h2>Installfest</h2>
-The <strong>${currentSem}</strong> installfest will be held in the first week of February. Keep an eye on the <a href="/lists.html">vtluug-g</a> listserv and our <a href="/irc.html">chat</a> for a precise date and planning info.<br>
+The <strong>${currentSem}</strong> installfest will be held in the first week of September. Keep an eye on the <a href="/lists.html">vtluug-g</a> listserv and our <a href="/irc.html">chat</a> for a precise date and planning info.<br>
 If you're interested in the event, join <a href="/irc.html">our chat</a> and come to meetings to help us organize the next one!<br>
 
 Required to use Linux for a class?<br>
