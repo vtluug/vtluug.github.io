@@ -9,19 +9,13 @@ Software and open data.</p>
 <dl class='officers-list'>
 
         <dt>President</dt>
-        <dd>Rishi Krishna (rishik@vt.edu)</dd>
+        <dd>Enzo Isotton (enzoisotton@vtluug.org)</dd>
 
-        <dt>Vice President</dt>
-        <dd>Brendan Roeting</dd>
+        <dt>Treasurer</dt>
+        <dd>Mikhail Schneide (mkl@vt.edu)</dd>
 
-        <dt>Treasurer / Sysadmin</dt>
-        <dd>Xavier Henschel</dd>
-
-        <dt>Supreme internet leader of the airgap nation</dt>
-        <dd>Sam Squier</dd>
-
-        <dt>Graduate Advisor</dt>
-        <dd>Ross George</dd>
+        <dt>The Deposed</dt>
+        <dd>Rishi Krishna (rsk@vtluug.org)</dd>
 
 
 
