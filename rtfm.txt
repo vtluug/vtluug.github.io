@@ -103,6 +103,14 @@ Configure iptables (NAT/Firewall)
 - Copy SCRIPTS/router/lan/vtluug_iptables.service into /etc/systemd/system
 - Start and enable vtluug_iptables.service
 
+Configure wireguard (Inter-site communication)
+- Install wireguard
+- Copy SCRIPTS/router/wireguard/wg0.conf into /etc/wireguard/
+- Populate the public and private keys
+    - Use `wg genkey` to generate private key
+    - To get public key, echo private key and pipe into `wg pubkey`
+- Start wireguard interface `wg-quick up wg0`
+
 
 Libvirt hosts (Ubuntu via netplan)
 ----------------------------------
