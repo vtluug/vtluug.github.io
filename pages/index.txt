@@ -20,7 +20,7 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 
 <h3>${currentSem} Meetings</h3>
 				<p>
-					${currentSem} Meetings will be every Wednesday in McBryde 226 (unless otherwise specified) at 7:00 PM.
+					${currentSem} Meetings will be every Wednesday in McBryde 240 (unless otherwise specified) at 7:00 PM.
 				</p>
                     <iframe src="/files/vtluug-calendar.html" class="schedule-embed"></iframe>
 				<p>	
