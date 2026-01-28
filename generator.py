@@ -12,8 +12,8 @@ template = open("template.html","r")
 lines = template.readlines()
 template.close()
 
-consts = {"currentSem": "Fall 2025",
-          "currentSemShort": "Fall '25",
+consts = {"currentSem": "Spring 2026",
+          "currentSemShort": "Spring '26",
           "currentSchoolYear": "2025-26"}
 for root, dirs, files in os.walk("./pages"):
     for file in files:
