@@ -14,7 +14,7 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 
 <h3>Installfest</h3>
 				<p>
-					The ${currentSemShort} installfest will be held on the first Wednesday of February. Keep an eye on the <a href="/lists.html">vtluug-g</a> listserv and our <a href="/irc.html">chat</a> for planning info.<br>
+					The ${currentSemShort} installfest will be held on the first Saturday of February from 2 to 7 pm. Keep an eye on the <a href="/lists.html">vtluug-g</a> listserv and our <a href="/irc.html">chat</a> for planning info.<br>
 
 				</p>
 
