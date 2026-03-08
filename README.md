@@ -1,7 +1,7 @@
 # vtluug-site
 This is the vtluug static site<s>, hosted by github pages.</s>
 
-it is hosted on sczi. you can inspect the configuration of the docker container that is reverse proxied [here](https://github.com/vtluug/docker-manifests/tree/master/sczi/vtluug-site). tldr: it pulls this repo automatically, so updates here are reflected on vtluug.org
+it is hosted on the Bastille cluster, using the container built from this repo's Dockerfile.
 
 vtluug.github.io *also* exists, but is not what is currently hosting vtluug.org.
 

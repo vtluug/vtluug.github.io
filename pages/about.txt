@@ -11,13 +11,14 @@ Software and open data.</p>
         <dt>President</dt>
         <dd>Enzo Isotton (enzoisotton@vtluug.org)</dd>
 
+        <dt>Vice President</dt>
+        <dd>Clark Jones</dd>
+
         <dt>Treasurer</dt>
         <dd>Mikhail Schneide (mkl@vt.edu)</dd>
 
-        <dt>The Deposed</dt>
-        <dd>Rishi Krishna (rsk@vtluug.org)</dd>
-
-
+        <dt>Social Media Manager</dt>
+        <dd>ap@vtluug.org</dd>
 
 </dl>
 
