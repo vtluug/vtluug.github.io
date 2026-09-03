@@ -10,17 +10,9 @@ If you have any questions about Linux, Unix, Open Source Software, or our club, 
 </p>
 <br>
 
-<h2>News</h2>
-
-<h3>Installfest</h3>
-				<p>
-					The ${currentSemShort} installfest will be held on the first Saturday of February from 2 to 7 pm. Keep an eye on the <a href="/lists.html">vtluug-g</a> listserv and our <a href="/irc.html">chat</a> for planning info.<br>
-
-				</p>
-
 <h3>${currentSem} Meetings</h3>
 				<p>
-					${currentSem} Meetings will be every Wednesday in McBryde 240 (unless otherwise specified) at 7:00 PM.
+					${currentSem} Meetings will be every Wednesday in McBryde 226 (unless otherwise specified) at 7:00 PM.
 				</p>
                     <iframe src="/files/vtluug-calendar.html" class="schedule-embed"></iframe>
 				<p>	

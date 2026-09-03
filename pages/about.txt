@@ -9,16 +9,16 @@ Software and open data.</p>
 <dl class='officers-list'>
 
         <dt>President</dt>
-        <dd>Enzo Isotton (enzoisotton@vtluug.org)</dd>
+        <dd>Clark Jones (clj.vtluug.org)</dd>
 
         <dt>Vice President</dt>
-        <dd>Clark Jones</dd>
+        <dd>Alex Parlow (ap@vtluug.org)</dd>
 
         <dt>Treasurer</dt>
-        <dd>Mikhail Schneide (mkl@vt.edu)</dd>
+        <dd>Alex Parlow (ap@vtluug.org)</dd>
 
         <dt>Social Media Manager</dt>
-        <dd>ap@vtluug.org</dd>
+        <dd>Alex Parlow (ap@vtluug.org)</dd>
 
 </dl>
 
