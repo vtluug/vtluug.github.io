@@ -9,7 +9,7 @@ Software and open data.</p>
 <dl class='officers-list'>
 
         <dt>President</dt>
-        <dd>Clark Jones (clj.vtluug.org)</dd>
+        <dd>Clark Jones (clj@vtluug.org)</dd>
 
         <dt>Vice President</dt>
         <dd>Alex Parlow (ap@vtluug.org)</dd>
@@ -19,6 +19,9 @@ Software and open data.</p>
 
         <dt>Social Media Manager</dt>
         <dd>Alex Parlow (ap@vtluug.org)</dd>
+
+        <dt><strong>"The"</strong> SysAdmin</dt>
+        <dd>Enzo R. Isotton (eri@vtluug.org)</dd>
 
 </dl>
 
